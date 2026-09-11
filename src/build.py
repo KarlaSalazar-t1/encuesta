@@ -83,4 +83,10 @@ json.dump({"cleanUrls": True}, open(os.path.join(sitio, "vercel.json"), "w"), in
 registro = src.replace('var VARIANTE_FIJA = "A";', 'var VARIANTE_FIJA = "B";', 1)
 open(os.path.join(RAIZ, "opcion-b-registro.html"), "w", encoding="utf-8").write(pagina(registro))
 
-print("listo ·", len(src), "bytes · vercel-encuesta/ y opcion-b-registro.html actualizados")
+# /opciones · comparativa de propuestas para la pantalla final de envios.
+# No lleva assets incrustados: se copia tal cual dentro del mismo esqueleto.
+opciones = open(os.path.join(RAIZ, "src", "opciones.src.html"), encoding="utf-8").read()
+os.makedirs(os.path.join(sitio, "opciones"), exist_ok=True)
+open(os.path.join(sitio, "opciones", "index.html"), "w", encoding="utf-8").write(pagina(opciones))
+
+print("listo ·", len(src), "bytes ·", len(opciones), "bytes en /opciones")
