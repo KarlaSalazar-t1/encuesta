@@ -155,7 +155,8 @@ border-radius:50%;background:#fff}
 .rg-s{margin:5px 0 0;font-size:12.5px;color:rgba(255,255,255,.85)}
 /* Otros rojos de la escala Nexus, planos */
 .regalo.r700{background:#CC0000;box-shadow:0 10px 28px -12px rgba(153,0,0,.55)}
-.regalo.r400{background:#E26153;box-shadow:0 10px 28px -12px rgba(190,80,64,.55)}
+.regalo.r400{background:linear-gradient(168deg,#E26153 0%,#DB3B2B 100%);
+box-shadow:0 10px 28px -12px rgba(190,80,64,.55)}
 
 /* ── 1 · Limpia ── */
 .tipo{margin:24px 0 0;flex:0 0 auto;max-width:420px}
@@ -237,8 +238,8 @@ var PROPUESTAS = [
          "usuario cotice. El troquel y el rojo avisan que hay un regalo antes de " +
          "leer una palabra.",
     con: "La tarjeta y el botón son la misma masa de color y se pelean el ojo. " +
-         "Separarlos obliga a bajar de tono, y ahí la escala de Nexus aprieta: " +
-         "el Rojo 400 deja el texto chico en 3.46:1, por debajo de AA.",
+         "Bajar de tono lo separa, pero la escala de Nexus aprieta: ningún rojo " +
+         "deja la línea chica en el 4.5:1 que pide AA.",
     cuerpo: [
       { etiqueta: "Rojo 500 · degradado (el de hoy)", html:
         '<h3>¡Tu primera recarga tiene regalo!</h3>' +
@@ -258,7 +259,7 @@ var PROPUESTAS = [
           '<p class="rg-h"><span class="rg-n">10%</span> de cashback</p>' +
           '<p class="rg-s">En tu primera recarga · hasta $5,000 MXN</p>' +
         '</div>' + '</div>' },
-      { etiqueta: "Rojo 400 · #E26153", html:
+      { etiqueta: "Rojo 400 → 500 · degradado", html:
         '<h3>¡Tu primera recarga tiene regalo!</h3>' +
         '<p class="sub">Cotiza y ahorra en tu primer envío.</p>' +
         '<div class="regalo r400">' + '<span class="rg-ico">' + GIFT + '</span>' +
