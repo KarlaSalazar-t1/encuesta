@@ -24,14 +24,12 @@ body{
   line-height:1.366;-webkit-font-smoothing:antialiased;
 }
 .wrap{max-width:1600px;margin:0 auto;padding:44px 40px 80px}
-.cab{max-width:640px}
+.cab{max-width:620px}
 .cab h1{font-size:30px;font-weight:800;letter-spacing:-.035em;margin:0}
 .cab p{font-size:15px;color:var(--g500);margin:12px 0 0;line-height:1.6}
-.cab a{color:var(--ink)}
 
-.barra{display:flex;align-items:center;gap:10px;margin:26px 0 0;flex-wrap:wrap}
-.vp{display:flex;gap:3px;background:var(--g50);border:1px solid var(--line);
-  border-radius:10px;padding:3px}
+.vp{display:inline-flex;gap:3px;background:var(--g50);border:1px solid var(--line);
+  border-radius:10px;padding:3px;margin-top:26px}
 .vp button{font:600 12.5px 'Manrope',sans-serif;color:var(--g500);background:transparent;
   border:0;border-radius:7px;padding:7px 14px;cursor:pointer;
   transition:color .15s ease, background-color .15s ease}
@@ -45,21 +43,17 @@ body{
 .p-n{font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--red)}
 .p-cab h2{font-size:21px;font-weight:700;letter-spacing:-.028em;margin:0}
 .p-cab em{font-style:normal;font-size:13.5px;color:var(--g500)}
-.p-notas{display:flex;gap:40px;margin:14px 0 24px;flex-wrap:wrap;max-width:900px}
-.p-notas div{flex:1;min-width:240px}
-.p-notas dt{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--g400);margin:0 0 5px}
+.p-notas{display:flex;gap:40px;margin:16px 0 24px;flex-wrap:wrap;max-width:860px}
+.p-notas div{flex:1;min-width:250px}
+.p-notas dt{font-size:12px;font-weight:800;margin:0 0 5px}
+.p-notas .pro dt{color:var(--green)}
+.p-notas .con dt{color:var(--g400)}
 .p-notas dd{font-size:14px;color:var(--oxford);margin:0;line-height:1.55}
 .marco{border:1px solid var(--line);border-radius:12px;overflow:hidden;
   width:900px;max-width:100%;background:var(--g50)}
 .marco.movil{width:390px}
-.marco iframe{display:block;width:100%;height:660px;border:0}
+.marco iframe{display:block;width:100%;height:640px;border:0}
 .marco.movil iframe{height:700px}
-
-.cierre-nota{margin-top:60px;border-top:1px solid var(--line);padding-top:26px;
-  max-width:640px}
-.cierre-nota h2{font-size:17px;font-weight:700;margin:0 0 10px}
-.cierre-nota p{font-size:14px;color:var(--oxford);margin:0 0 10px;line-height:1.6}
 
 @media (max-width:768px){
   .wrap{padding:28px 20px 60px}
@@ -71,30 +65,15 @@ body{
 <div class="wrap">
   <div class="cab">
     <h1>Pantalla final de envíos</h1>
-    <p>Cuatro enfoques distintos para el mismo momento: la encuesta terminó y hay
-    que empujar la primera recarga. Cambia la estructura y el mecanismo de
-    persuasión, no solo el color. El resto del modal es idéntico en las cuatro
-    para que la comparación sea justa.</p>
-    <div class="barra">
-      <div class="vp" role="group" aria-label="Tamaño de pantalla">
-        <button type="button" data-vp="d" aria-pressed="true">Escritorio</button>
-        <button type="button" data-vp="m" aria-pressed="false">Móvil</button>
-      </div>
+    <p>Cuatro enfoques para el mismo momento: la encuesta terminó y hay que
+    empujar la primera recarga. Cambia la estructura y el mensaje, no solo
+    el color.</p>
+    <div class="vp" role="group" aria-label="Tamaño de pantalla">
+      <button type="button" data-vp="d" aria-pressed="true">Escritorio</button>
+      <button type="button" data-vp="m" aria-pressed="false">Móvil</button>
     </div>
   </div>
   <div id="lista"></div>
-
-  <div class="cierre-nota">
-    <h2>Dos cosas que conviene decidir aparte</h2>
-    <p><b>El CTA.</b> Las cuatro dicen «Recargar ahora» para que se comparen solo
-    por diseño. «Cotizar» manda a otro lado —a calcular un envío, no a cargar
-    saldo— y esa decisión aplica igual a cualquiera de las cuatro.</p>
-    <p><b>La urgencia.</b> Ninguna usa un contador regresivo. Un reloj que corre
-    es el recurso más fuerte que existe, y también el más caro si la oferta no
-    vence de verdad: si alguien vuelve al día siguiente y sigue ahí, la promesa
-    se rompe. Con una fecha real de vigencia, cualquiera de las cuatro la puede
-    mostrar.</p>
-  </div>
 </div>
 
 <script>
@@ -105,6 +84,9 @@ var GIFT = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8
 var RELOJ = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
   'stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
   '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 1.9"/></svg>';
+var FLECHA = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A3A3A3" ' +
+  'stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+  '<path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 var CHECK = '<div class="dico"><svg width="26" height="26" viewBox="0 0 30 30" fill="none" aria-hidden="true">' +
   '<path d="M7.5 15.4L12.6 20.5L22.5 9.9" stroke="#fff" stroke-width="3" stroke-linecap="round" ' +
   'stroke-linejoin="round"/></svg></div>';
@@ -112,7 +94,6 @@ var EQUIS = '<button type="button" class="cerrar" aria-label="Cerrar">' +
   '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">' +
   '<path d="M1.5 1.5l11 11M12.5 1.5l-11 11" stroke="currentColor" stroke-width="1.8" ' +
   'stroke-linecap="round"/></svg></button>';
-var PIE = '<p class="of-pie oscuro">' + RELOJ + 'Solo por tiempo limitado</p>';
 
 /* El modal es el mismo de la encuesta: mismos tokens, mismas medidas. */
 var CSS = `
@@ -142,47 +123,25 @@ h3{font-size:26px;font-weight:700;letter-spacing:-.03em;margin:0 0 3px;color:var
 .sub{font-size:14px;color:var(--g500);margin:0}
 .linkSalida{background:none;border:0;color:var(--g500);font:500 13.5px 'Manrope',sans-serif;
 cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:6px;border-radius:6px;
-margin-top:2px}
+margin-top:16px}
 .linkSalida:hover{color:var(--ink)}
 .linkSalida:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .of-cta{width:100%;max-width:420px;background:var(--red);color:#fff;height:44px;border:0;
-border-radius:10px;font:700 14px 'Manrope',sans-serif;cursor:pointer;
+border-radius:10px;font:700 14px 'Manrope',sans-serif;cursor:pointer;flex:0 0 auto;
 transition:background-color .15s ease}
 .of-cta:hover{background:var(--red-hover)}
 .of-cta:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.of-pie{font-size:11.5px;font-weight:600;margin:12px 0 14px;display:flex;
+.of-pie{font-size:11.5px;font-weight:600;color:var(--oxford);margin:12px 0 0;display:flex;
 align-items:center;justify-content:center;gap:6px}
-.of-pie.oscuro{color:var(--oxford)}
+.of-pie + .linkSalida{margin-top:6px}
 
-/* ── 1 · Cupón ── */
-.oferta{width:100%;max-width:420px;margin:24px 0 14px;border-radius:14px;
-padding:20px 22px 18px;text-align:center;flex:0 0 auto}
-.oferta.cupon{background:linear-gradient(152deg,#E4472F 0%,#DB3B2B 50%,#BE2B1C 100%);
-color:#fff;box-shadow:0 10px 28px -12px rgba(190,43,28,.6);position:relative;overflow:hidden}
-.cup-top{display:flex;align-items:center;justify-content:center;gap:10px}
-.cup-ico{display:grid;place-items:center;flex:0 0 auto}
-.cup-ico svg{width:19px;height:19px}
-.cup-lead{font-size:14px;font-weight:600;margin:0;color:rgba(255,255,255,.92)}
-.cup-n{font-size:40px;font-weight:800;letter-spacing:-.04em;line-height:1;margin:8px 0 0}
-.cup-n span{font-size:17px;font-weight:700;letter-spacing:0;margin-left:6px}
-.cup-l{font-size:14px;margin:10px 0 0;line-height:1.4;color:rgba(255,255,255,.9)}
-.cup-l b{font-weight:800;color:#fff}
-.corte{position:relative;height:0;margin:17px -22px;border-top:1px dashed rgba(255,255,255,.5)}
-.corte::before,.corte::after{content:"";position:absolute;top:-11px;width:22px;height:22px;
-border-radius:50%;background:#fff}
-.corte::before{left:-11px}
-.corte::after{right:-11px}
-.cupon .of-cta{background:#fff;color:var(--red);max-width:none}
-.cupon .of-cta:hover{background:#FFF1EF}
-.cupon .of-pie{color:rgba(255,255,255,.85);margin-bottom:0}
-
-/* ── 2 · Regalo ── */
+/* ── 1 · Regalo ── */
 .regalo{width:100%;max-width:420px;margin:24px 0 18px;border-radius:14px;padding:20px 22px;
 background:linear-gradient(152deg,#E4472F 0%,#DB3B2B 50%,#BE2B1C 100%);color:#fff;
 box-shadow:0 10px 28px -12px rgba(190,43,28,.6);display:flex;align-items:center;
 text-align:left;overflow:hidden;flex:0 0 auto}
-.rg-ico{flex:0 0 44px;display:grid;place-items:center}
-.rg-ico svg{width:26px;height:26px}
+.rg-ico{flex:0 0 40px;display:grid;place-items:center}
+.rg-ico svg{width:25px;height:25px}
 .rg-cut{position:relative;width:0;align-self:stretch;flex:0 0 auto;
 border-left:1px dashed rgba(255,255,255,.5);margin:-20px 18px -20px 4px}
 .rg-cut::before,.rg-cut::after{content:"";position:absolute;left:-11px;width:22px;height:22px;
@@ -190,22 +149,20 @@ border-radius:50%;background:#fff}
 .rg-cut::before{top:-11px}
 .rg-cut::after{bottom:-11px}
 .rg-body{flex:1;min-width:0}
-.rg-lead{font-size:13px;font-weight:600;margin:0;color:rgba(255,255,255,.85)}
-.rg-fila{display:flex;align-items:center;gap:12px;margin-top:2px}
-.rg-n{font-size:46px;font-weight:800;letter-spacing:-.045em;line-height:1;flex:0 0 auto}
-.rg-t{font-size:14px;font-weight:700;line-height:1.28}
-.rg-tope{font-size:12.5px;margin:8px 0 0;color:rgba(255,255,255,.85)}
+.rg-h{margin:0;font-size:17px;font-weight:700;display:flex;align-items:baseline;gap:9px}
+.rg-n{font-size:36px;font-weight:800;letter-spacing:-.045em;line-height:1}
+.rg-s{margin:5px 0 0;font-size:12.5px;color:rgba(255,255,255,.85)}
 
-/* ── 3 · Tipográfica ── */
+/* ── 2 · Tipográfica ── */
 .tipo{margin:22px 0 22px;flex:0 0 auto}
 .tp-n{font-size:82px;font-weight:800;color:var(--red);letter-spacing:-.055em;
 line-height:.9;margin:0}
 .tp-l{font-size:17px;font-weight:700;color:var(--ink);margin:14px 0 0}
 .tp-t{font-size:13.5px;color:var(--g500);margin:6px 0 0}
 
-/* ── 4 · Calculadora ── */
+/* ── 3 · Calculadora ── */
 .calc{width:100%;max-width:420px;margin:22px 0 18px;flex:0 0 auto}
-.cl-q{font-size:13.5px;font-weight:600;color:var(--oxford);margin:0 0 10px}
+.cl-q{font-size:13.5px;font-weight:700;color:var(--ink);margin:0 0 10px}
 .cl-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .cl-chips button{height:44px;border:1px solid var(--line);background:#fff;border-radius:10px;
 font:700 14px 'Manrope',sans-serif;color:var(--ink);cursor:pointer;
@@ -220,17 +177,27 @@ display:flex;align-items:center;justify-content:space-between;gap:12px;text-alig
 .cl-n{font-size:30px;font-weight:800;letter-spacing:-.04em;color:var(--ink);
 flex:0 0 auto;line-height:1}
 
+/* ── 4 · Ahorro ── */
+.ah{width:100%;max-width:420px;margin:24px 0 22px;background:var(--red-50);border-radius:12px;
+padding:18px 22px;display:flex;align-items:center;justify-content:center;gap:24px;flex:0 0 auto}
+.ah-c{display:flex;flex-direction:column;gap:4px;text-align:left}
+.ah-l{font-size:12px;font-weight:600;color:var(--oxford)}
+.ah-v{font-size:27px;font-weight:800;letter-spacing:-.04em;color:var(--ink);line-height:1}
+.ah-v.mas{color:var(--red)}
+.ah-fl{display:grid;place-items:center;flex:0 0 auto}
+
 @media (max-width:768px){
   .veil{align-items:end;padding:0}
   .modal{width:100%;height:580px;max-height:100%;border-radius:16px 16px 0 0}
   .finL{padding:26px 22px 22px}
   h3{font-size:21px}
-  .cup-n{font-size:34px}
-  .rg-n{font-size:38px}
-  .rg-t{font-size:13px}
+  .rg-n{font-size:32px}
+  .rg-h{font-size:15px}
   .tp-n{font-size:66px}
   .cl-out{padding:14px}
   .cl-n{font-size:26px}
+  .ah{gap:16px;padding:16px}
+  .ah-v{font-size:23px}
 }
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
@@ -239,93 +206,65 @@ flex:0 0 auto;line-height:1}
 
 var PROPUESTAS = [
   {
-    titulo: "Cupón troquelado",
-    enfoque: "la oferta como objeto",
-    gana: "Se lee como un cupón antes de leerse como texto: el troquel y el rojo " +
-          "dicen «esto es un beneficio» en un cuarto de segundo. El botón vive dentro, " +
-          "así que la tarjeta es la acción y no una ilustración.",
-    cuesta: "Los $5,000 son el tope, no lo que casi nadie va a recibir. Puestos como " +
-            "titular prometen una cifra que la mayoría no va a ver.",
-    html:
-      '<h3>¡Todo listo!</h3><p class="sub">Tu cuenta quedó configurada.</p>' +
-      '<div class="oferta cupon">' +
-        '<div class="cup-top"><span class="cup-ico">' + GIFT + '</span>' +
-        '<p class="cup-lead">Recibe hasta</p></div>' +
-        '<p class="cup-n">$5,000<span>MXN</span></p>' +
-        '<p class="cup-l"><b>10% de cashback</b> en tu primera recarga</p>' +
-        '<div class="corte"></div>' +
-        '<button type="button" class="of-cta">Recargar ahora</button>' +
-        '<p class="of-pie">' + RELOJ + 'Solo por tiempo limitado</p>' +
-      '</div>'
-  },
-  {
     titulo: "Regalo",
-    enfoque: "tu exploración, con la jerarquía corregida",
-    gana: "El 10% es el protagonista y «de cashback / en tu primera recarga» va a su " +
-          "lado en dos líneas. Es el dato honesto —el 10% sí lo recibe todo el mundo— " +
-          "y el que hace entender el mecanismo sin leer.",
-    cuesta: "Corregí tres cosas de la pantalla que mandaste: el «10% de cashback» en " +
-            "rojo claro sobre rojo no pasa contraste, el botón afuera hace que la " +
-            "tarjeta se sienta un adorno, y era «tu primera recarga», no «tu primer».",
+    enfoque: "la oferta como objeto",
+    pro: "El 10% se lee primero y es el dato que todos reciben. El troquel y el rojo " +
+         "avisan que hay un beneficio antes de leer una sola palabra.",
+    con: "La tarjeta roja y el botón rojo compiten. Con el botón afuera, la tarjeta " +
+         "se lee como ilustración y no como acción.",
     html:
       '<h3>¡Tu primera recarga tiene regalo!</h3>' +
-      '<p class="sub">Tu cuenta quedó configurada.</p>' +
+      '<p class="sub">Cotiza y ahorra en tu primer envío.</p>' +
       '<div class="regalo">' +
         '<span class="rg-ico">' + GIFT + '</span>' +
         '<span class="rg-cut"></span>' +
         '<div class="rg-body">' +
-          '<p class="rg-lead">Recibe</p>' +
-          '<div class="rg-fila"><span class="rg-n">10%</span>' +
-          '<span class="rg-t">de cashback<br>en tu primera recarga</span></div>' +
-          '<p class="rg-tope">Hasta $5,000 MXN de vuelta</p>' +
+          '<p class="rg-h"><span class="rg-n">10%</span> de cashback</p>' +
+          '<p class="rg-s">En tu primera recarga · hasta $5,000 MXN</p>' +
         '</div>' +
       '</div>' +
-      '<button type="button" class="of-cta">Recargar ahora</button>' + PIE
+      '<button type="button" class="of-cta">Cotizar</button>'
   },
   {
     titulo: "Tipográfica",
-    enfoque: "sin contenedor · doce palabras",
-    gana: "Responde de frente al «hay mucho texto»: no hay tarjeta, no hay degradado, " +
-          "no hay adorno. El número es el diseño. Es la más cercana al «sencillo, " +
-          "limpio y tech» y la que mejor envejece.",
-    cuesta: "Sin envoltura puede leerse como un dato más de la pantalla y no como un " +
-            "regalo. Es la que más depende de que el copy y el botón carguen solos la " +
-            "urgencia.",
+    enfoque: "sin contenedor",
+    pro: "Un solo foco. Sin tarjeta ni degradado, el número carga todo el peso y la " +
+         "pantalla respira.",
+    con: "Sin envoltura puede leerse como un dato más de la pantalla y no como un regalo.",
     html:
-      '<h3>¡Todo listo!</h3><p class="sub">Tu cuenta quedó configurada.</p>' +
+      '<h3>¡Todo listo!</h3>' +
+      '<p class="sub">Cotiza y ahorra en tu primer envío.</p>' +
       '<div class="tipo">' +
         '<p class="tp-n">10%</p>' +
         '<p class="tp-l">de cashback en tu primera recarga</p>' +
         '<p class="tp-t">Hasta $5,000 MXN</p>' +
       '</div>' +
-      '<button type="button" class="of-cta">Recargar ahora</button>' + PIE
+      '<button type="button" class="of-cta">Cotizar</button>'
   },
   {
     titulo: "Calculadora",
-    enfoque: "el beneficio en pesos, no en porcentaje",
-    gana: "Deja de anunciar y empieza a cobrar: el usuario elige monto aquí y llega al " +
-          "flujo de recarga con el dato ya puesto. Un paso menos. Y «recibes $5,500» se " +
-          "entiende más rápido que «10% de cashback».",
-    cuesta: "Es la que menos se siente premio y la única que pide una decisión antes " +
-            "del botón. También deja a la vista que el beneficio real ronda los $100 a " +
-            "$1,000 — para tocar el tope de $5,000 habría que recargar $50,000.",
+    enfoque: "el beneficio en pesos",
+    pro: "Una cifra en pesos se entiende más rápido que un porcentaje, y el monto llega " +
+         "ya elegido al flujo de recarga.",
+    con: "Pide una decisión antes del botón y es la que menos se siente premio.",
     html:
       '<h3>¡Todo listo!</h3>' +
       '<p class="sub">Tu primera recarga tiene 10% de cashback.</p>' +
       '<div class="calc">' +
-        '<p class="cl-q">¿Cuánto vas a recargar?</p>' +
+        '<p class="cl-q">Recarga ahora y recibe un regalo</p>' +
         '<div class="cl-chips" id="chips">' +
-          '<button type="button" data-m="1000" aria-pressed="false">$1,000</button>' +
-          '<button type="button" data-m="5000" aria-pressed="true">$5,000</button>' +
-          '<button type="button" data-m="10000" aria-pressed="false">$10,000</button>' +
+          '<button type="button" data-m="500" aria-pressed="false">$500</button>' +
+          '<button type="button" data-m="1000" aria-pressed="true">$1,000</button>' +
+          '<button type="button" data-m="2000" aria-pressed="false">$2,000</button>' +
         '</div>' +
         '<div class="cl-out">' +
           '<span><span class="cl-lab">Recibes en saldo</span>' +
-          '<span class="cl-plus" id="plus">+$500 de cashback</span></span>' +
-          '<span class="cl-n" id="total">$5,500</span>' +
+          '<span class="cl-plus" id="plus">+$100 de cashback</span></span>' +
+          '<span class="cl-n" id="total">$1,100</span>' +
         '</div>' +
       '</div>' +
-      '<button type="button" class="of-cta" id="cta">Recargar $5,000</button>' + PIE,
+      '<button type="button" class="of-cta" id="cta">Recargar $1,000</button>' +
+      '<p class="of-pie">' + RELOJ + 'Solo por tiempo limitado</p>',
     js:
       'var chips=document.getElementById("chips");' +
       'chips.addEventListener("click",function(e){' +
@@ -338,6 +277,25 @@ var PROPUESTAS = [
         'document.getElementById("plus").textContent="+"+f(c)+" de cashback";' +
         'document.getElementById("cta").textContent="Recargar "+f(m);' +
       '});'
+  },
+  {
+    titulo: "Ahorro",
+    enfoque: "el cashback dicho en envíos",
+    pro: "Habla en la moneda del usuario: no «cashback», sino saldo que rinde más. " +
+         "La equivalencia se entiende de un vistazo y no hay nada que interpretar.",
+    con: "El saldo extra no es un descuento exacto: recargar $500 y enviar con $550 " +
+         "equivale a 9% sobre el envío, no a 10%. Conviene no prometer un porcentaje aquí.",
+    html:
+      '<h3>¡Todo listo!</h3>' +
+      '<p class="sub">Tu saldo rinde más en tu primera recarga.</p>' +
+      '<div class="ah">' +
+        '<span class="ah-c"><span class="ah-l">Recargas</span>' +
+        '<span class="ah-v">$500</span></span>' +
+        '<span class="ah-fl">' + FLECHA + '</span>' +
+        '<span class="ah-c"><span class="ah-l">Envías con</span>' +
+        '<span class="ah-v mas">$550</span></span>' +
+      '</div>' +
+      '<button type="button" class="of-cta">Cotizar</button>'
   }
 ];
 
@@ -350,11 +308,11 @@ PROPUESTAS.forEach(function(p, i){
     '<div class="p-cab"><span class="p-n">' + (i + 1) + '</span>' +
     '<h2>' + p.titulo + '</h2><em>' + p.enfoque + '</em></div>' +
     '<dl class="p-notas">' +
-      '<div><dt>Qué gana</dt><dd>' + p.gana + '</dd></div>' +
-      '<div><dt>Qué cuesta</dt><dd>' + p.cuesta + '</dd></div>' +
+      '<div class="pro"><dt>Pro</dt><dd>' + p.pro + '</dd></div>' +
+      '<div class="con"><dt>Contra</dt><dd>' + p.con + '</dd></div>' +
     '</dl>' +
     '<div class="marco"><iframe title="Propuesta ' + (i + 1) + ': ' + p.titulo +
-    '" loading="lazy"></iframe></div>';
+    '"></iframe></div>';
 
   var doc =
     '<!doctype html><html lang="es"><head><meta charset="utf-8">' +
