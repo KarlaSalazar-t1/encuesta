@@ -154,12 +154,12 @@ border-radius:50%;background:#fff}
 
 /* ── 1 · Limpia ── */
 .tipo{margin:24px 0 0;flex:0 0 auto;max-width:420px}
+.tp-s{font-size:15px;font-weight:500;color:var(--oxford);margin:0;line-height:1.5}
 .tp-h{display:flex;align-items:baseline;justify-content:center;gap:8px;
-flex-wrap:wrap;margin:0}
-.tp-n{font-size:30px;font-weight:800;color:var(--red);letter-spacing:-.04em;
+flex-wrap:wrap;margin:8px 0 0}
+.tp-n{font-size:26px;font-weight:800;color:var(--ink);letter-spacing:-.04em;
 line-height:1}
-.tp-l{font-size:16px;font-weight:700;color:var(--ink)}
-.tp-s{font-size:14px;color:var(--g500);margin:8px 0 0;line-height:1.5}
+.tp-l{font-size:15px;font-weight:700;color:var(--ink)}
 
 /* ── 3 · Ahorro ── */
 .ah{width:100%;max-width:420px;margin:24px 0 0;background:var(--red-50);border-radius:12px;
@@ -195,8 +195,9 @@ flex:0 0 auto;line-height:1}
   .rg-n{font-size:32px}
   .rg-h{font-size:15px}
   .tipo{margin-top:20px}
-  .tp-n{font-size:26px}
-  .tp-l{font-size:14.5px}
+  .tp-n{font-size:23px}
+  .tp-l{font-size:14px}
+  .tp-s{font-size:14px}
   .ah{gap:16px;padding:16px}
   .ah-v{font-size:23px}
   .cl-out{padding:14px}
@@ -211,16 +212,16 @@ var PROPUESTAS = [
   {
     titulo: "Limpia",
     enfoque: "el beneficio en una línea",
-    pro: "El título solo confirma y la oferta vive en su propio bloque, con un único " +
-         "acento de color. Es la que menos levanta la voz sobre el admin de atrás.",
+    pro: "El título solo confirma y la oferta vive en su propio bloque, en texto plano: " +
+         "el único color de la pantalla es el botón. Es la que menos levanta la voz.",
     con: "Sin objeto ni envoltura, el cashback puede pasar como un dato de la pantalla " +
          "y no como un motivo para actuar.",
     cuerpo:
       '<h3>Tu cuenta está lista</h3>' +
       '<div class="tipo">' +
+        '<p class="tp-s">Cotiza y ahorra en tu primer envío.</p>' +
         '<p class="tp-h"><span class="tp-n">10%</span>' +
         '<span class="tp-l">de cashback en tu primera recarga</span></p>' +
-        '<p class="tp-s">Cotiza y ahorra en tu primer envío.</p>' +
       '</div>',
     acciones: '<button type="button" class="of-cta">Cotizar</button>'
   },
