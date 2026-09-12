@@ -124,6 +124,9 @@ display:grid;place-items:center;transition:background-color .15s ease,color .15s
 text-align:center;width:100%;min-height:0}
 .acciones{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;
 width:100%;text-align:center;padding-top:20px}
+/* Variante sin anclaje: el botón viaja con el contenido, centrado */
+.finL.junto{justify-content:center}
+.finL.junto .cuerpo{flex:0 0 auto}
 
 .dico{width:52px;height:52px;border-radius:50%;background:var(--green);display:grid;
 place-items:center;margin-bottom:12px;flex:0 0 auto}
@@ -159,9 +162,8 @@ border-radius:50%;background:#fff}
 .rg-body{flex:1;min-width:0}
 .rg-h{margin:0;font-size:17px;font-weight:700;display:flex;align-items:baseline;gap:9px}
 .rg-n{font-size:36px;font-weight:800;letter-spacing:-.045em;line-height:1}
-.rg-s{margin:5px 0 0;font-size:12.5px;color:rgba(255,255,255,.85)}
-/* Otros rojos de la escala Nexus, planos */
-.regalo.r700{background:#CC0000;box-shadow:0 10px 28px -12px rgba(153,0,0,.55)}
+.rg-s{margin:5px 0 0;font-size:12.5px;font-weight:500;color:#fff}
+/* Degradado del Rojo 400 al 500: claro arriba, donde el 10% es texto grande */
 .regalo.r400{background:linear-gradient(168deg,#E26153 0%,#DB3B2B 100%);
 box-shadow:0 10px 28px -12px rgba(190,80,64,.55)}
 
@@ -225,6 +227,7 @@ var PROPUESTAS = [
   {
     titulo: "Limpia",
     enfoque: "el beneficio en una línea",
+    junto: true,
     pro: "El título solo confirma y la oferta vive en su propio bloque, en texto plano: " +
          "el único color de la pantalla es el botón. Es la que menos levanta la voz.",
     con: "Sin objeto ni envoltura, el cashback puede pasar como un dato de la pantalla " +
@@ -244,38 +247,17 @@ var PROPUESTAS = [
     pro: "La tarjeta no pide acción: deja el beneficio en la cabeza para cuando el " +
          "usuario cotice. El troquel y el rojo avisan que hay un regalo antes de " +
          "leer una palabra.",
-    con: "La tarjeta y el botón son la misma masa de color y se pelean el ojo. " +
-         "Bajar de tono lo separa, pero la escala de Nexus aprieta: ningún rojo " +
-         "deja la línea chica en el 4.5:1 que pide AA.",
-    cuerpo: [
-      { etiqueta: "Rojo 500 · degradado (el de hoy)", html:
-        '<h3>¡Tu primera recarga tiene regalo!</h3>' +
-        '<p class="sub">Cotiza y ahorra en tu primer envío.</p>' +
-        '<div class="regalo">' + '<span class="rg-ico">' + GIFT + '</span>' +
+    con: "La línea chica va en blanco sobre rojo y mide 4.29:1, apenas debajo del " +
+         "4.5:1 que pide AA. Sacarla de la tarjeta sería lo único que lo cierra.",
+    cuerpo:
+      '<h3>¡Tu primera recarga tiene regalo!</h3>' +
+      '<p class="sub">Cotiza y ahorra en tu primer envío.</p>' +
+      '<div class="regalo r400">' + '<span class="rg-ico">' + GIFT + '</span>' +
         '<span class="rg-cut"></span>' +
         '<div class="rg-body">' +
           '<p class="rg-h"><span class="rg-n">10%</span> de cashback</p>' +
           '<p class="rg-s">En tu primera recarga · hasta $5,000 MXN</p>' +
-        '</div>' + '</div>' },
-      { etiqueta: "Rojo 700 · #CC0000", html:
-        '<h3>¡Tu primera recarga tiene regalo!</h3>' +
-        '<p class="sub">Cotiza y ahorra en tu primer envío.</p>' +
-        '<div class="regalo r700">' + '<span class="rg-ico">' + GIFT + '</span>' +
-        '<span class="rg-cut"></span>' +
-        '<div class="rg-body">' +
-          '<p class="rg-h"><span class="rg-n">10%</span> de cashback</p>' +
-          '<p class="rg-s">En tu primera recarga · hasta $5,000 MXN</p>' +
-        '</div>' + '</div>' },
-      { etiqueta: "Rojo 400 → 500 · degradado", html:
-        '<h3>¡Tu primera recarga tiene regalo!</h3>' +
-        '<p class="sub">Cotiza y ahorra en tu primer envío.</p>' +
-        '<div class="regalo r400">' + '<span class="rg-ico">' + GIFT + '</span>' +
-        '<span class="rg-cut"></span>' +
-        '<div class="rg-body">' +
-          '<p class="rg-h"><span class="rg-n">10%</span> de cashback</p>' +
-          '<p class="rg-s">En tu primera recarga · hasta $5,000 MXN</p>' +
-        '</div>' + '</div>' }
-    ],
+        '</div>' + '</div>',
     acciones: '<button type="button" class="of-cta">Cotizar</button>'
   },
   {
@@ -373,7 +355,7 @@ function documento(cuerpo, p){
     '<style>' + CSS + '</style></head><body>' +
     '<div class="veil"><div class="modal" role="dialog" aria-modal="true">' +
     EQUIS +
-    '<div class="finL">' +
+    '<div class="finL' + (p.junto ? " junto" : "") + '">' +
       '<div class="cuerpo">' + CHECK + cuerpo + '</div>' +
       '<div class="acciones">' + p.acciones +
       '<button type="button" class="linkSalida">Ir al admin</button></div>' +
