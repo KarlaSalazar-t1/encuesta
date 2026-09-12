@@ -160,14 +160,9 @@ border-radius:50%;background:#fff}
 .rg-h{margin:0;font-size:17px;font-weight:700;display:flex;align-items:baseline;gap:9px}
 .rg-n{font-size:36px;font-weight:800;letter-spacing:-.045em;line-height:1}
 .rg-s{margin:5px 0 0;font-size:12.5px;color:rgba(255,255,255,.85)}
-/* Dos tonos: el rojo se reduce al gajo del icono y el cuerpo va en claro */
-.regalo.duo{background:var(--red-50);color:var(--ink);padding:0;
-box-shadow:0 8px 22px -14px rgba(31,41,55,.45)}
-.duo .rg-ico{flex:0 0 68px;align-self:stretch;background:var(--red)}
-.duo .rg-cut{border-left-color:rgba(219,59,43,.32);margin:0 18px 0 0}
-.duo .rg-n{color:var(--red)}
-.duo .rg-body{padding:20px 22px 20px 0}
-.duo .rg-s{color:var(--oxford)}
+/* Otros rojos de la escala Nexus, planos */
+.regalo.r700{background:#CC0000;box-shadow:0 10px 28px -12px rgba(153,0,0,.55)}
+.regalo.r400{background:#E26153;box-shadow:0 10px 28px -12px rgba(190,80,64,.55)}
 
 /* ── 1 · Limpia ── */
 .tipo{margin:24px 0 0;flex:0 0 auto;max-width:420px}
@@ -248,10 +243,11 @@ var PROPUESTAS = [
     pro: "La tarjeta no pide acción: deja el beneficio en la cabeza para cuando el " +
          "usuario cotice. El troquel y el rojo avisan que hay un regalo antes de " +
          "leer una palabra.",
-    con: "En rojo completo la tarjeta compite con el botón. En dos tonos eso se " +
-         "resuelve, pero el cupón pierde algo de peso sobre el blanco del modal.",
+    con: "La tarjeta y el botón son la misma masa de color y se pelean el ojo. " +
+         "Separarlos obliga a bajar de tono, y ahí la escala de Nexus aprieta: " +
+         "el Rojo 400 deja el texto chico en 3.46:1, por debajo de AA.",
     cuerpo: [
-      { etiqueta: "Rojo completo", html:
+      { etiqueta: "Rojo 500 · degradado (el de hoy)", html:
         '<h3>¡Tu primera recarga tiene regalo!</h3>' +
         '<p class="sub">Cotiza y ahorra en tu primer envío.</p>' +
         '<div class="regalo">' + '<span class="rg-ico">' + GIFT + '</span>' +
@@ -260,10 +256,19 @@ var PROPUESTAS = [
           '<p class="rg-h"><span class="rg-n">10%</span> de cashback</p>' +
           '<p class="rg-s">En tu primera recarga · hasta $5,000 MXN</p>' +
         '</div>' + '</div>' },
-      { etiqueta: "Dos tonos", html:
+      { etiqueta: "Rojo 700 · #CC0000", html:
         '<h3>¡Tu primera recarga tiene regalo!</h3>' +
         '<p class="sub">Cotiza y ahorra en tu primer envío.</p>' +
-        '<div class="regalo duo">' + '<span class="rg-ico">' + GIFT + '</span>' +
+        '<div class="regalo r700">' + '<span class="rg-ico">' + GIFT + '</span>' +
+        '<span class="rg-cut"></span>' +
+        '<div class="rg-body">' +
+          '<p class="rg-h"><span class="rg-n">10%</span> de cashback</p>' +
+          '<p class="rg-s">En tu primera recarga · hasta $5,000 MXN</p>' +
+        '</div>' + '</div>' },
+      { etiqueta: "Rojo 400 · #E26153", html:
+        '<h3>¡Tu primera recarga tiene regalo!</h3>' +
+        '<p class="sub">Cotiza y ahorra en tu primer envío.</p>' +
+        '<div class="regalo r400">' + '<span class="rg-ico">' + GIFT + '</span>' +
         '<span class="rg-cut"></span>' +
         '<div class="rg-body">' +
           '<p class="rg-h"><span class="rg-n">10%</span> de cashback</p>' +
