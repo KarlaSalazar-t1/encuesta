@@ -108,15 +108,21 @@ border-radius:50%;border:0;background:var(--g100);color:var(--g500);cursor:point
 display:grid;place-items:center;transition:background-color .15s ease,color .15s ease}
 .cerrar:hover{background:var(--g200);color:var(--ink)}
 .cerrar:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.finL{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-text-align:center;padding:34px;overflow:auto}
+
+/* El cuerpo se centra en lo que sobra; las acciones viven abajo, fijas */
+.finL{flex:1;display:flex;flex-direction:column;padding:34px;min-height:0;overflow:auto}
+.cuerpo{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+text-align:center;width:100%;min-height:0}
+.acciones{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;
+width:100%;text-align:center;padding-top:20px}
+
 .dico{width:52px;height:52px;border-radius:50%;background:var(--green);display:grid;
 place-items:center;margin-bottom:12px;flex:0 0 auto}
 h3{font-size:26px;font-weight:700;letter-spacing:-.03em;margin:0 0 3px;color:var(--ink)}
-.sub{font-size:14px;color:var(--g500);margin:0}
+.sub{font-size:14px;color:var(--g500);margin:0;max-width:38ch;line-height:1.5}
 .linkSalida{background:none;border:0;color:var(--g500);font:500 13.5px 'Manrope',sans-serif;
 cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:6px;border-radius:6px;
-margin-top:16px}
+margin-top:14px}
 .linkSalida:hover{color:var(--ink)}
 .linkSalida:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .of-cta{width:100%;max-width:420px;background:var(--red);color:#fff;height:44px;border:0;
@@ -126,10 +132,10 @@ transition:background-color .15s ease}
 .of-cta:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .of-pie{font-size:11.5px;font-weight:600;color:var(--oxford);margin:12px 0 0;display:flex;
 align-items:center;justify-content:center;gap:6px}
-.of-pie + .linkSalida{margin-top:6px}
+.of-pie + .linkSalida{margin-top:8px}
 
 /* ── 1 · Regalo ── */
-.regalo{width:100%;max-width:420px;margin:24px 0 18px;border-radius:14px;padding:20px 22px;
+.regalo{width:100%;max-width:420px;margin:24px 0 0;border-radius:14px;padding:20px 22px;
 background:linear-gradient(152deg,#E4472F 0%,#DB3B2B 50%,#BE2B1C 100%);color:#fff;
 box-shadow:0 10px 28px -12px rgba(190,43,28,.6);display:flex;align-items:center;
 text-align:left;overflow:hidden;flex:0 0 auto}
@@ -147,14 +153,22 @@ border-radius:50%;background:#fff}
 .rg-s{margin:5px 0 0;font-size:12.5px;color:rgba(255,255,255,.85)}
 
 /* ── 2 · Tipográfica ── */
-.tipo{margin:22px 0 22px;flex:0 0 auto}
-.tp-n{font-size:82px;font-weight:800;color:var(--red);letter-spacing:-.055em;
+.tipo{margin:20px 0 0;flex:0 0 auto}
+.tp-n{font-size:68px;font-weight:800;color:var(--red);letter-spacing:-.05em;
 line-height:.9;margin:0}
-.tp-l{font-size:17px;font-weight:700;color:var(--ink);margin:14px 0 0}
-.tp-t{font-size:13.5px;color:var(--g500);margin:6px 0 0}
+.tp-l{font-size:15px;font-weight:500;color:var(--oxford);margin:12px 0 0}
 
-/* ── 3 · Calculadora ── */
-.calc{width:100%;max-width:420px;margin:22px 0 18px;flex:0 0 auto}
+/* ── 3 · Ahorro ── */
+.ah{width:100%;max-width:420px;margin:24px 0 0;background:var(--red-50);border-radius:12px;
+padding:18px 22px;display:flex;align-items:center;justify-content:center;gap:24px;flex:0 0 auto}
+.ah-c{display:flex;flex-direction:column;gap:4px;text-align:left}
+.ah-l{font-size:12px;font-weight:600;color:var(--oxford)}
+.ah-v{font-size:27px;font-weight:800;letter-spacing:-.04em;color:var(--ink);line-height:1}
+.ah-v.mas{color:var(--red)}
+.ah-fl{display:grid;place-items:center;flex:0 0 auto}
+
+/* ── 4 · Calculadora ── */
+.calc{width:100%;max-width:420px;margin:22px 0 0;flex:0 0 auto}
 .cl-q{font-size:13.5px;font-weight:700;color:var(--ink);margin:0 0 10px}
 .cl-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .cl-chips button{height:44px;border:1px solid var(--line);background:#fff;border-radius:10px;
@@ -170,15 +184,6 @@ display:flex;align-items:center;justify-content:space-between;gap:12px;text-alig
 .cl-n{font-size:30px;font-weight:800;letter-spacing:-.04em;color:var(--ink);
 flex:0 0 auto;line-height:1}
 
-/* ── 4 · Ahorro ── */
-.ah{width:100%;max-width:420px;margin:24px 0 22px;background:var(--red-50);border-radius:12px;
-padding:18px 22px;display:flex;align-items:center;justify-content:center;gap:24px;flex:0 0 auto}
-.ah-c{display:flex;flex-direction:column;gap:4px;text-align:left}
-.ah-l{font-size:12px;font-weight:600;color:var(--oxford)}
-.ah-v{font-size:27px;font-weight:800;letter-spacing:-.04em;color:var(--ink);line-height:1}
-.ah-v.mas{color:var(--red)}
-.ah-fl{display:grid;place-items:center;flex:0 0 auto}
-
 @media (max-width:768px){
   .veil{align-items:end;padding:0}
   .modal{width:100%;height:580px;max-height:100%;border-radius:16px 16px 0 0}
@@ -186,11 +191,11 @@ padding:18px 22px;display:flex;align-items:center;justify-content:center;gap:24p
   h3{font-size:21px}
   .rg-n{font-size:32px}
   .rg-h{font-size:15px}
-  .tp-n{font-size:66px}
-  .cl-out{padding:14px}
-  .cl-n{font-size:26px}
+  .tp-n{font-size:60px}
   .ah{gap:16px;padding:16px}
   .ah-v{font-size:23px}
+  .cl-out{padding:14px}
+  .cl-n{font-size:26px}
 }
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
@@ -200,12 +205,13 @@ padding:18px 22px;display:flex;align-items:center;justify-content:center;gap:24p
 var PROPUESTAS = [
   {
     titulo: "Regalo",
-    enfoque: "la oferta como objeto",
-    pro: "El 10% se lee primero y es el dato que todos reciben. El troquel y el rojo " +
-         "avisan que hay un beneficio antes de leer una sola palabra.",
-    con: "La tarjeta roja y el botón rojo compiten. Con el botón afuera, la tarjeta " +
-         "se lee como ilustración y no como acción.",
-    html:
+    enfoque: "el beneficio como recordatorio",
+    pro: "La tarjeta no pide acción: deja el beneficio en la cabeza para cuando el " +
+         "usuario cotice. El troquel y el rojo avisan que hay un regalo antes de " +
+         "leer una palabra.",
+    con: "Dos rojos seguidos —tarjeta y botón— se pelean el ojo, y el botón pierde " +
+         "fuerza justo donde debería ganarla.",
+    cuerpo:
       '<h3>¡Tu primera recarga tiene regalo!</h3>' +
       '<p class="sub">Cotiza y ahorra en tu primer envío.</p>' +
       '<div class="regalo">' +
@@ -215,32 +221,50 @@ var PROPUESTAS = [
           '<p class="rg-h"><span class="rg-n">10%</span> de cashback</p>' +
           '<p class="rg-s">En tu primera recarga · hasta $5,000 MXN</p>' +
         '</div>' +
-      '</div>' +
-      '<button type="button" class="of-cta">Cotizar</button>'
+      '</div>',
+    acciones: '<button type="button" class="of-cta">Cotizar</button>'
   },
   {
     titulo: "Tipográfica",
-    enfoque: "sin contenedor",
-    pro: "Un solo foco. Sin tarjeta ni degradado, el número carga todo el peso y la " +
-         "pantalla respira.",
-    con: "Sin envoltura puede leerse como un dato más de la pantalla y no como un regalo.",
-    html:
+    enfoque: "un elemento y un acento",
+    pro: "Lo más limpio posible: un número, una línea y el botón. Un solo color de " +
+         "acento y dos pesos de texto en toda la pantalla.",
+    con: "Sin envoltura, el beneficio puede leerse como un dato más y no como un regalo.",
+    cuerpo:
       '<h3>¡Todo listo!</h3>' +
-      '<p class="sub">Cotiza y ahorra en tu primer envío.</p>' +
       '<div class="tipo">' +
         '<p class="tp-n">10%</p>' +
         '<p class="tp-l">de cashback en tu primera recarga</p>' +
-        '<p class="tp-t">Hasta $5,000 MXN</p>' +
-      '</div>' +
-      '<button type="button" class="of-cta">Cotizar</button>'
+      '</div>',
+    acciones: '<button type="button" class="of-cta">Cotizar</button>'
+  },
+  {
+    titulo: "Ahorro",
+    enfoque: "el cashback dicho en pesos",
+    pro: "Habla en la moneda del usuario: no un porcentaje que hay que calcular, sino " +
+         "cuánto recibe. Se entiende de un vistazo.",
+    con: "El ejemplo fija un monto. Con $500 queda muy por encima de la recarga " +
+         "promedio de $150, donde la misma cuenta daría $150 → $165.",
+    cuerpo:
+      '<h3>¡Todo listo!</h3>' +
+      '<p class="sub">Tu saldo rinde más en tu primera recarga. Aprovecha el 10% ' +
+      'de cashback.</p>' +
+      '<div class="ah">' +
+        '<span class="ah-c"><span class="ah-l">Recargas</span>' +
+        '<span class="ah-v">$500</span></span>' +
+        '<span class="ah-fl">' + FLECHA + '</span>' +
+        '<span class="ah-c"><span class="ah-l">Recibes</span>' +
+        '<span class="ah-v mas">$550</span></span>' +
+      '</div>',
+    acciones: '<button type="button" class="of-cta">Cotizar</button>'
   },
   {
     titulo: "Calculadora",
-    enfoque: "el beneficio en pesos",
-    pro: "Una cifra en pesos se entiende más rápido que un porcentaje, y el monto llega " +
-         "ya elegido al flujo de recarga.",
+    enfoque: "el monto se elige aquí",
+    pro: "El beneficio en pesos se entiende más rápido que un porcentaje, y el monto " +
+         "llega ya elegido al flujo de recarga.",
     con: "Pide una decisión antes del botón y es la que menos se siente premio.",
-    html:
+    cuerpo:
       '<h3>¡Todo listo!</h3>' +
       '<p class="sub">Tu primera recarga tiene 10% de cashback.</p>' +
       '<div class="calc">' +
@@ -255,7 +279,8 @@ var PROPUESTAS = [
           '<span class="cl-plus" id="plus">+$100 de cashback</span></span>' +
           '<span class="cl-n" id="total">$1,100</span>' +
         '</div>' +
-      '</div>' +
+      '</div>',
+    acciones:
       '<button type="button" class="of-cta" id="cta">Recargar $1,000</button>' +
       '<p class="of-pie">' + RELOJ + 'Solo por tiempo limitado</p>',
     js:
@@ -270,25 +295,6 @@ var PROPUESTAS = [
         'document.getElementById("plus").textContent="+"+f(c)+" de cashback";' +
         'document.getElementById("cta").textContent="Recargar "+f(m);' +
       '});'
-  },
-  {
-    titulo: "Ahorro",
-    enfoque: "el cashback dicho en envíos",
-    pro: "Habla en la moneda del usuario: no «cashback», sino saldo que rinde más. " +
-         "La equivalencia se entiende de un vistazo y no hay nada que interpretar.",
-    con: "El saldo extra no es un descuento exacto: recargar $500 y enviar con $550 " +
-         "equivale a 9% sobre el envío, no a 10%. Conviene no prometer un porcentaje aquí.",
-    html:
-      '<h3>¡Todo listo!</h3>' +
-      '<p class="sub">Tu saldo rinde más en tu primera recarga.</p>' +
-      '<div class="ah">' +
-        '<span class="ah-c"><span class="ah-l">Recargas</span>' +
-        '<span class="ah-v">$500</span></span>' +
-        '<span class="ah-fl">' + FLECHA + '</span>' +
-        '<span class="ah-c"><span class="ah-l">Envías con</span>' +
-        '<span class="ah-v mas">$550</span></span>' +
-      '</div>' +
-      '<button type="button" class="of-cta">Cotizar</button>'
   }
 ];
 
@@ -315,8 +321,11 @@ PROPUESTAS.forEach(function(p, i){
     'family=Manrope:wght@400;500;600;700;800&display=swap">' +
     '<style>' + CSS + '</style></head><body>' +
     '<div class="veil"><div class="modal" role="dialog" aria-modal="true">' +
-    EQUIS + '<div class="finL">' + CHECK + p.html +
-    '<button type="button" class="linkSalida">Ir al admin</button>' +
+    EQUIS +
+    '<div class="finL">' +
+      '<div class="cuerpo">' + CHECK + p.cuerpo + '</div>' +
+      '<div class="acciones">' + p.acciones +
+      '<button type="button" class="linkSalida">Ir al admin</button></div>' +
     '</div></div></div>' +
     (p.js ? '<script>' + p.js + '<\/script>' : '') +
     '</body></html>';
