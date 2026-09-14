@@ -313,14 +313,33 @@ body{
   display:flex;align-items:center;justify-content:center;gap:6px}
 /* Variante sin oferta: misma tarjeta, tono neutro */
 .oferta.neutra{background:linear-gradient(140deg,#FBFBFB 0%,#F3F3F3 100%)}
-/* Cierre de envíos: mismo patrón que el modal que ya corre en producción */
-.dico.suave{background:#E8F4EB}
-.finL .sub b{color:var(--ink);font-weight:700}
-.premio{display:inline-flex;align-items:center;gap:7px;margin:18px 0 0;
-  background:var(--red-50);color:var(--red);border-radius:999px;padding:9px 16px;
-  font-size:13px;font-weight:700;line-height:1}
-.premio svg{width:15px;height:15px;flex:0 0 auto}
-.finBtns{width:100%;max-width:360px;margin-top:24px}
+/* Cierre de envíos: réplica del modal de cashback que ya corre en producción */
+.modalFin.rojo{background:linear-gradient(162deg,#E8472F 0%,#DB3B2B 52%,#C62E1D 100%)}
+.modalFin.rojo .cerrar{background:rgba(255,255,255,.16);color:#fff}
+.modalFin.rojo .cerrar:hover{background:rgba(255,255,255,.3);color:#fff}
+.rojoC{color:#fff}
+.ofTile{width:58px;height:58px;border-radius:16px;background:rgba(255,255,255,.18);
+  display:grid;place-items:center;flex:0 0 auto;color:#fff}
+.ofTile svg{width:28px;height:28px}
+.ofEyebrow{font-size:13px;font-weight:600;margin:0 0 16px;color:rgba(255,255,255,.88)}
+.rojoC h3.ofH{display:flex;flex-direction:column;align-items:center;gap:5px;
+  margin:16px 0 0;font-size:inherit;font-weight:400;letter-spacing:0;color:#fff}
+.ofLead{font-size:24px;font-weight:700;letter-spacing:-.02em}
+.ofN{font-size:56px;font-weight:800;letter-spacing:-.045em;line-height:1;
+  display:inline-flex;align-items:baseline;gap:9px}
+.ofN i{font-size:22px;font-weight:700;font-style:normal;letter-spacing:0}
+.ofExtra{font-size:17px;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+.ofPanel{width:100%;max-width:330px;margin:18px 0 0;border-radius:14px;
+  background:rgba(255,255,255,.16);padding:14px 18px;flex:0 0 auto}
+.ofPct{font-size:26px;font-weight:800;letter-spacing:-.03em;margin:0;line-height:1}
+.ofPctL{font-size:13.5px;font-weight:500;margin:6px 0 0;line-height:1.35}
+.ofCta{width:100%;max-width:330px;height:48px;margin:20px 0 0;border:0;border-radius:10px;
+  background:#fff;color:var(--red);font:700 15px 'Manrope',sans-serif;cursor:pointer;
+  flex:0 0 auto;transition:background-color .15s ease}
+.ofCta:hover{background:#FFF1EF}
+.ofCta:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.ofPie{font-size:12.5px;font-weight:600;margin:14px 0 0;display:flex;align-items:center;
+  justify-content:center;gap:6px;color:rgba(255,255,255,.92)}
 .of-vis{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:14px}
 .of-pagos{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:16px}
 .of-pago{line-height:0;display:inline-flex}
@@ -378,8 +397,11 @@ body{
   .finL{padding:26px 22px 22px}
   .of-n{font-size:26px}
   .of-btns button{font-size:12.5px;padding:0 8px}
-  .premio{font-size:12px;padding:8px 14px}
-  .finBtns{max-width:none}
+  .ofN{font-size:44px}
+  .ofN i{font-size:18px}
+  .ofLead{font-size:20px}
+  .ofExtra{font-size:15px}
+  .ofPanel,.ofCta{max-width:none}
   /* En angosto la foto cede ancho para que los botones respiren */
   .oferta{padding:18px}
   /* Ancho fijo por logo para que entren exactamente 4 por fila */
@@ -771,9 +793,8 @@ body{
   var CHECK = '<div class="dico"><svg width="26" height="26" viewBox="0 0 30 30" fill="none" aria-hidden="true">' +
     '<path d="M7.5 15.4L12.6 20.5L22.5 9.9" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>' +
     '</svg></div>';
-  var CHECK_SUAVE = '<div class="dico suave"><svg width="26" height="26" viewBox="0 0 30 30" ' +
-    'fill="none" aria-hidden="true"><path d="M7.5 15.4L12.6 20.5L22.5 9.9" stroke="#51AF70" ' +
-    'stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
+  var RAYO = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" ' +
+    'aria-hidden="true"><path d="M13.5 2L4 13.8h6.2L9.3 22l9.2-11.9H12l1.5-8.1z"/></svg>';
   var REGALO_P = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" ' +
     'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
     '<path d="M20 12v9H4v-9M2 7h20v5H2zM12 21V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>' +
@@ -855,22 +876,24 @@ body{
         '</div></div>';
     }
 
-    /* En la versión B el botón abre el flujo de recarga dentro del modal,
-       así que ahí el rótulo tiene que ser el de recargar, no el de cotizar. */
-    var ctaFin = version === "B" ? "Recargar saldo" : "Cotizar envío";
-    return '<div class="modal modalFin' + (entrada ? " enter" : "") +
+    return '<div class="modal modalFin rojo' + (entrada ? " enter" : "") +
       '" role="dialog" aria-modal="true" aria-labelledby="q-fin">' +
       EQUIS +
       '<div class="confetti" id="confetti" aria-hidden="true"></div>' +
-      '<div class="finL">' + CHECK_SUAVE +
-        '<h3 id="q-fin" tabindex="-1">Tu cuenta está lista</h3>' +
-        '<p class="sub">Tu <b>primera recarga tiene cashback</b>. ' +
-        'Úsalo en tu primer envío.</p>' +
-        '<p class="premio">' + REGALO_P + '10% de cashback · hasta $5,000 MXN</p>' +
-        '<div class="of-btns finBtns">' +
-          '<button type="button" class="b-sec" data-fin="1" data-salir="1">Explorar</button>' +
-          '<button type="button" class="b-pri" data-fin="1">' + ctaFin + '</button>' +
+      '<div class="finL rojoC">' +
+        '<p class="ofEyebrow">Tu regalo por configurar tu cuenta</p>' +
+        '<span class="ofTile">' + REGALO_P + '</span>' +
+        '<h3 class="ofH" id="q-fin" tabindex="-1">' +
+          '<span class="ofLead">Recibe hasta</span>' +
+          '<span class="ofN">$5,000<i>MXN</i></span>' +
+          '<span class="ofExtra">Extra para tus envíos</span>' +
+        '</h3>' +
+        '<div class="ofPanel">' +
+          '<p class="ofPct">10%</p>' +
+          '<p class="ofPctL">de cashback en tu primera recarga</p>' +
         '</div>' +
+        '<button type="button" class="b-pri ofCta" data-fin="1">Recargar ahora</button>' +
+        '<p class="ofPie">' + RAYO + 'Oferta disponible por tiempo limitado</p>' +
       '</div></div>';
   }
 
@@ -1149,7 +1172,6 @@ body{
         var principal = b.classList.contains("of-cta") || b.classList.contains("b-pri") ||
                         b.classList.contains("b-ia") || b.classList.contains("b-sec");
         if(b.getAttribute("aria-disabled") === "true") return;
-        if(b.hasAttribute("data-salir")){ S = inicial(); entrada = true; render(); return; }
         if(version === "B" && prod === "pagos" && !S.activado && principal){
           S.activado = true; entrada = false; render(); return;
         }
