@@ -608,6 +608,9 @@ body{
                  ["marketplaces","Marketplaces"],["tienda","Tienda en línea propia"],
                  ["mayoreo","A otros negocios / mayoreo"]];
   var GIROS = [["productos","Productos"],["servicios","Servicios"],["ambos","Ambos"]];
+  /* Rangos sin traslape: con "1 a 10" y "10 a 50" quien hace 10 no sabe cuál marcar */
+  var VOLUMEN = [["1-10","1 a 10"],["11-50","11 a 50"],["51-200","51 a 200"],
+                 ["201-1000","201 a 1,000"],["1000+","Más de 1,000"]];
   var TIPOS = [["empezando","No, estoy empezando"],
                ["vendiendo","Sí, ya estoy operando"],
                ["personal","Es para uso personal"]];
@@ -629,11 +632,16 @@ body{
 
   function inicial(){
     return { tipo:"empezando", nombre:PRELLENADO.empezando, tocado:false,
-             canales:[], giro:null, paso:0,
+             canales:[], giro:null, volumen:null, paso:0,
              extra:null, metodo:null, monto:null, factura:false, tipoLink:null, tyc:false, activado:false };
   }
   function P(){ return PROD[prod]; }
-  function ruta(){ return RUTAS[S.tipo]; }
+  /* El volumen solo se pregunta en envíos y solo a quien ya opera:
+     a quien empieza no tiene con qué responderlo. */
+  function ruta(){
+    var r = RUTAS[S.tipo];
+    return (S.tipo === "vendiendo" && prod === "envios") ? r.concat("volumen") : r;
+  }
   function pant(){ return S.paso >= ruta().length ? "fin" : ruta()[S.paso]; }
   function ultima(){ return S.paso === ruta().length - 1; }
   function dosCol(){ return variante === "B" && !cel; }
@@ -642,6 +650,7 @@ body{
     if(p === "nombre") return S.nombre.trim() === "";
     if(p === "canales") return S.canales.length === 0;
     if(p === "giro") return S.giro === null;
+    if(p === "volumen") return S.volumen === null;
     return false;
   }
   function esc(s){
@@ -722,6 +731,16 @@ body{
       h += '<p class="help">Elige una opción.</p></div>';
       h += '<div class="' + rejilla("g3") + '" role="radiogroup" aria-labelledby="' + id + '">';
       GIROS.forEach(function(g){ h += opcion(g[0], g[1], "radio", S.giro === g[0], "giro"); });
+      h += '</div>';
+    }
+    if(p === "volumen"){
+      h += '<div class="qb"><h2 class="q" id="' + id + '" tabindex="-1">' +
+        '¿Cuántos envíos haces al mes?</h2>';
+      h += '<p class="help">Un aproximado está bien.</p></div>';
+      h += '<div class="' + rejilla("g3") + '" role="radiogroup" aria-labelledby="' + id + '">';
+      VOLUMEN.forEach(function(v){
+        h += opcion(v[0], v[1], "radio", S.volumen === v[0], "volumen");
+      });
       h += '</div>';
     }
     return h;
@@ -1183,7 +1202,7 @@ body{
       var ant = S.tipo;
       S.tipo = v;
       if(!S.tocado) S.nombre = PRELLENADO[v];
-      if(ant === "vendiendo") S.canales = [];
+      if(ant === "vendiendo"){ S.canales = []; S.volumen = null; }
       raiz.querySelectorAll('.opt[data-g="tipo"]').forEach(function(o){
         var on = o.getAttribute("data-v") === v;
         o.setAttribute("aria-checked", on ? "true" : "false");
@@ -1200,8 +1219,8 @@ body{
       cta(raiz);
       return;
     }
-    if(g === "giro"){
-      S.giro = v;
+    if(g === "giro" || g === "volumen"){
+      S[g] = v;
       b.parentElement.querySelectorAll(".opt").forEach(function(o){
         var on = o.getAttribute("data-v") === v;
         o.setAttribute("aria-checked", on ? "true" : "false");
