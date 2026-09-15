@@ -311,6 +311,8 @@ body{
 .modalFin.rojo .cerrar{background:rgba(255,255,255,.16);color:#fff}
 .modalFin.rojo .cerrar:hover{background:rgba(255,255,255,.3);color:#fff}
 .rojoC{color:#fff}
+.ofListo{font-size:19px;font-weight:700;letter-spacing:-.025em;margin:0 0 20px;
+  color:rgba(255,255,255,.93)}
 .ofTile{width:58px;height:58px;border-radius:16px;background:rgba(255,255,255,.18);
   display:grid;place-items:center;flex:0 0 auto;color:#fff}
 .ofTile svg{width:28px;height:28px}
@@ -400,6 +402,7 @@ body{
   .rojoC{justify-content:flex-start}
   .ofCuerpo{flex:1;min-height:0;justify-content:center}
   .ofAcciones{padding-top:24px}
+  .ofListo{font-size:17px;margin-bottom:18px}
   .rojoC h3.ofH{margin-top:24px;gap:11px}
   .ofPanel{margin-top:30px}
   /* En angosto la foto cede ancho para que los botones respiren */
@@ -874,11 +877,12 @@ body{
     }
 
     return '<div class="modal modalFin rojo' + (entrada ? " enter" : "") +
-      '" role="dialog" aria-modal="true" aria-labelledby="q-fin">' +
+      '" role="dialog" aria-modal="true" aria-labelledby="q-listo q-fin">' +
       EQUIS +
       '<div class="confetti" id="confetti" aria-hidden="true"></div>' +
       '<div class="finL rojoC">' +
         '<div class="ofCuerpo">' +
+          '<p class="ofListo" id="q-listo">¡Todo listo!</p>' +
           '<span class="ofTile">' + REGALO_P + '</span>' +
           '<h3 class="ofH" id="q-fin" tabindex="-1">' +
             '<span class="ofLead">Te regalamos hasta</span>' +
@@ -1312,7 +1316,7 @@ body{
       try { campo.setSelectionRange(n, n); } catch(err){}
       return;
     }
-    var h = document.querySelector("#veil .q, #veil .done h3");
+    var h = document.querySelector("#veil .q, #veil .done h3, #veil .finL h3");
     if(h) h.focus({ preventScroll:true });
   }
 
