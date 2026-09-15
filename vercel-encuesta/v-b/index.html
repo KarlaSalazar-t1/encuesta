@@ -339,6 +339,8 @@ body{
 .ofCta:focus-visible{outline:2px solid #fff;outline-offset:3px}
 .ofPie{font-size:12.5px;font-weight:600;margin:14px 0 0;display:flex;align-items:center;
   justify-content:center;gap:6px;color:rgba(255,255,255,.92)}
+.ofCuerpo,.ofAcciones{display:flex;flex-direction:column;align-items:center;width:100%}
+.ofAcciones{flex:0 0 auto}
 .of-vis{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:14px}
 .of-pagos{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:16px}
 .of-pago{line-height:0;display:inline-flex}
@@ -401,6 +403,10 @@ body{
   .ofLead{font-size:20px}
   .ofExtra{font-size:15px}
   .ofPanel,.ofCta{max-width:none}
+  /* En el sheet el botón y la vigencia quedan fijos al pie */
+  .rojoC{justify-content:flex-start}
+  .ofCuerpo{flex:1;min-height:0;justify-content:center}
+  .ofAcciones{padding-top:16px}
   /* En angosto la foto cede ancho para que los botones respiren */
   .oferta{padding:18px}
   /* Ancho fijo por logo para que entren exactamente 4 por fila */
@@ -792,8 +798,6 @@ body{
   var CHECK = '<div class="dico"><svg width="26" height="26" viewBox="0 0 30 30" fill="none" aria-hidden="true">' +
     '<path d="M7.5 15.4L12.6 20.5L22.5 9.9" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>' +
     '</svg></div>';
-  var RAYO = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" ' +
-    'aria-hidden="true"><path d="M13.5 2L4 13.8h6.2L9.3 22l9.2-11.9H12l1.5-8.1z"/></svg>';
   var REGALO_P = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" ' +
     'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
     '<path d="M20 12v9H4v-9M2 7h20v5H2zM12 21V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>' +
@@ -871,7 +875,6 @@ body{
           '<h3 id="q-fin" tabindex="-1">¡Todo listo!</h3>' +
           '<p class="sub">Tu cuenta quedó configurada.</p>' +
           tarjeta +
-          '<button type="button" class="linkSalida" data-fin="1">' + p.salida + '</button>' +
         '</div></div>';
     }
 
@@ -880,18 +883,22 @@ body{
       EQUIS +
       '<div class="confetti" id="confetti" aria-hidden="true"></div>' +
       '<div class="finL rojoC">' +
-        '<span class="ofTile">' + REGALO_P + '</span>' +
-        '<h3 class="ofH" id="q-fin" tabindex="-1">' +
-          '<span class="ofLead">Te regalamos hasta</span>' +
-          '<span class="ofN">$5,000<i>MXN</i></span>' +
-          '<span class="ofExtra">Extra para tus envíos</span>' +
-        '</h3>' +
-        '<div class="ofPanel">' +
-          '<p class="ofPct">10%</p>' +
-          '<p class="ofPctL">de cashback en tu primera recarga</p>' +
+        '<div class="ofCuerpo">' +
+          '<span class="ofTile">' + REGALO_P + '</span>' +
+          '<h3 class="ofH" id="q-fin" tabindex="-1">' +
+            '<span class="ofLead">Te regalamos hasta</span>' +
+            '<span class="ofN">$5,000<i>MXN</i></span>' +
+            '<span class="ofExtra">Extra para tus envíos</span>' +
+          '</h3>' +
+          '<div class="ofPanel">' +
+            '<p class="ofPct">10%</p>' +
+            '<p class="ofPctL">de cashback en tu primera recarga</p>' +
+          '</div>' +
         '</div>' +
+        '<div class="ofAcciones">' +
         '<button type="button" class="b-pri ofCta" data-fin="1">Recargar ahora</button>' +
-        '<p class="ofPie">' + RAYO + 'Oferta disponible por tiempo limitado</p>' +
+        '<p class="ofPie">' + RELOJ + 'Disponible por tiempo limitado</p>' +
+        '</div>' +
       '</div></div>';
   }
 
