@@ -307,17 +307,17 @@ body{
 /* Variante sin oferta: misma tarjeta, tono neutro */
 .oferta.neutra{background:linear-gradient(140deg,#FBFBFB 0%,#F3F3F3 100%)}
 /* Cierre de envíos: réplica del modal de cashback que ya corre en producción */
-.modalFin.rojo{background:linear-gradient(162deg,#E8472F 0%,#DB3B2B 52%,#C62E1D 100%)}
+.modalFin.rojo{background:radial-gradient(50% 50% at 50% 50%,#DB3B2B 0%,#C42C1C 100%)}
 .modalFin.rojo .cerrar{background:rgba(255,255,255,.16);color:#fff}
 .modalFin.rojo .cerrar:hover{background:rgba(255,255,255,.3);color:#fff}
 .rojoC{color:#fff}
-.ofListo{font-size:19px;font-weight:700;letter-spacing:-.025em;margin:0 0 20px;
-  color:rgba(255,255,255,.93)}
+.ofListo{font-size:16px;font-weight:700;letter-spacing:-.02em;margin:18px 0 0;
+  color:rgba(255,255,255,.8)}
 .ofTile{width:58px;height:58px;border-radius:16px;background:rgba(255,255,255,.18);
   display:grid;place-items:center;flex:0 0 auto;color:#fff}
 .ofTile svg{width:28px;height:28px}
 .rojoC h3.ofH{display:flex;flex-direction:column;align-items:center;gap:9px;
-  margin:22px 0 0;font-size:inherit;font-weight:400;letter-spacing:0;color:#fff}
+  margin:10px 0 0;font-size:inherit;font-weight:400;letter-spacing:0;color:#fff}
 .ofLead{font-size:24px;font-weight:700;letter-spacing:-.02em}
 .ofN{font-size:56px;font-weight:800;letter-spacing:-.045em;line-height:1;
   display:inline-flex;align-items:baseline;gap:9px}
@@ -402,8 +402,8 @@ body{
   .rojoC{justify-content:flex-start}
   .ofCuerpo{flex:1;min-height:0;justify-content:center}
   .ofAcciones{padding-top:24px}
-  .ofListo{font-size:17px;margin-bottom:18px}
-  .rojoC h3.ofH{margin-top:24px;gap:11px}
+  .ofListo{font-size:15px;margin-top:16px}
+  .rojoC h3.ofH{margin-top:11px;gap:11px}
   .ofPanel{margin-top:30px}
   /* En angosto la foto cede ancho para que los botones respiren */
   .oferta{padding:18px}
@@ -882,8 +882,8 @@ body{
       '<div class="confetti" id="confetti" aria-hidden="true"></div>' +
       '<div class="finL rojoC">' +
         '<div class="ofCuerpo">' +
-          '<p class="ofListo" id="q-listo">¡Todo listo!</p>' +
           '<span class="ofTile">' + REGALO_P + '</span>' +
+          '<p class="ofListo" id="q-listo">¡Todo listo!</p>' +
           '<h3 class="ofH" id="q-fin" tabindex="-1">' +
             '<span class="ofLead">Te regalamos hasta</span>' +
             '<span class="ofN">$5,000<i>MXN</i></span>' +
