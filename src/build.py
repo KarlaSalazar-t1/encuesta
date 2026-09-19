@@ -112,14 +112,17 @@ escribe("v-b/index.html", pagina(encuesta))
 landing = procesar("landing.src.html")
 escribe("landing/index.html", pagina(landing))
 
-# /opciones no lleva assets: se copia tal cual dentro del mismo esqueleto
+# Estas dos no llevan assets: se copian tal cual dentro del mismo esqueleto
 opciones = open(os.path.join(RAIZ, "src", "opciones.src.html"), encoding="utf-8").read()
 escribe("opciones/index.html", pagina(opciones))
+
+matriz = open(os.path.join(RAIZ, "src", "matriz.src.html"), encoding="utf-8").read()
+escribe("matriz/index.html", pagina(matriz))
 
 json.dump({"cleanUrls": True}, open(os.path.join(SITIO, "vercel.json"), "w"), indent=2)
 
 registro = encuesta.replace('var VARIANTE_FIJA = "A";', 'var VARIANTE_FIJA = "B";', 1)
 open(os.path.join(RAIZ, "opcion-b-registro.html"), "w", encoding="utf-8").write(pagina(registro))
 
-print("listo · encuesta %d · landing %d · opciones %d bytes"
-      % (len(encuesta), len(landing), len(opciones)))
+print("listo · encuesta %d · landing %d · opciones %d · matriz %d bytes"
+      % (len(encuesta), len(landing), len(opciones), len(matriz)))

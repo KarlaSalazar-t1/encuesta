@@ -11,6 +11,7 @@ administrador de T1envíos, T1tienda y T1pagos.
 | Versión B — el cierre continúa en el primer paso real | https://vercel-encuesta-roan.vercel.app/v-b |
 | Encuesta para la landing nueva — cinco casos de entrada | https://vercel-encuesta-roan.vercel.app/landing |
 | Cierres de envíos — cuatro propuestas comparadas | https://vercel-encuesta-roan.vercel.app/opciones |
+| Matriz de casos — qué se pregunta y dónde termina cada uno | https://vercel-encuesta-roan.vercel.app/matriz |
 
 El selector de arriba cambia el caso: en las dos primeras, el producto del panel
 de fondo y del cierre; en `/landing`, además de dónde llega el usuario.
@@ -62,6 +63,7 @@ curl -s https://vercel-encuesta-roan.vercel.app/ | grep -o "Solo por tiempo limi
 src/encuesta.src.html   fuente de la encuesta actual
 src/landing.src.html    fuente de la encuesta para la landing nueva
 src/opciones.src.html   fuente de la comparativa de cierres
+src/matriz.src.html     fuente de la matriz de casos
 src/build.py            genera el sitio
 iconos/                 imagotipos T1, métodos de pago, mockup de tienda
 celebrate.lottie        animación de confeti del cierre
