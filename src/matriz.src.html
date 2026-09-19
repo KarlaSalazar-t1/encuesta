@@ -31,7 +31,7 @@ tbody tr:hover{background:#FCFCFC}
 /* Una línea más marcada donde empieza cada caso, para leer por bloques */
 tr.abre td{border-top:1px solid var(--g200)}
 tr.abre:first-child td{border-top:0}
-td.caso{font-weight:700}
+td.caso{font-weight:700;vertical-align:middle}
 td.num{text-align:center;font-weight:800}
 th.c,td.c{text-align:center}
 .marca{color:var(--red);font-weight:800}
@@ -128,12 +128,19 @@ var R = [
    "Ninguna: entra directo al flujo de crear tienda", "—"]
 ];
 
+/* Cuántas filas seguidas comparte cada caso, para fundir su celda */
+var cuantas = {}, orden = [];
+R.forEach(function(f){
+  if(cuantas[f[0]] === undefined){ cuantas[f[0]] = 0; orden.push(f[0]); }
+  cuantas[f[0]]++;
+});
+
 var previo = null;
 document.getElementById("tabla").innerHTML = R.map(function(f){
   var abre = f[0] !== previo;
   previo = f[0];
   return '<tr' + (abre ? ' class="abre"' : '') + '>' +
-    '<td class="caso">' + f[0] + '</td>' +
+    (abre ? '<td class="caso" rowspan="' + cuantas[f[0]] + '">' + f[0] + '</td>' : '') +
     '<td>' + f[1] + '</td>' +
     [f[2], f[3], f[4], f[5], f[6]].map(function(v){
       return '<td class="c">' + (v ? SI : NO) + '</td>';
