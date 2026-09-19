@@ -536,6 +536,30 @@ body{
 .check-l b{font-weight:700;color:var(--ink);text-decoration:underline;text-underline-offset:3px}
 
 /* Pagos activado, dentro de la misma tarjeta */
+/* Resumen del link — versión B */
+.oferta.resumen{text-align:left;padding:16px 18px}
+.res-fila{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.res-c{font-size:14px;font-weight:700;color:var(--ink);min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.res-m{font-size:18px;font-weight:800;color:var(--ink);white-space:nowrap}
+.res-url{display:flex;align-items:center;gap:8px;margin-top:13px;padding-top:13px;
+  border-top:1px solid var(--g200)}
+.res-url > span{flex:1;min-width:0;font-size:13px;color:var(--oxford);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.res-copy{flex:0 0 auto;border:0;background:none;cursor:pointer;padding:6px 8px;
+  border-radius:8px;font:700 12.5px 'Manrope',sans-serif;color:var(--g500);
+  display:inline-flex;align-items:center;gap:6px;transition:color .15s ease}
+.res-copy:hover{background:var(--g100);color:var(--ink)}
+.res-copy:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.res-copy[aria-pressed="true"]{color:var(--green)}
+/* Verde de WhatsApp: el botón se reconoce antes de leerlo */
+.btn-wa{width:100%;max-width:420px;height:46px;margin-top:16px;border:0;border-radius:10px;
+  background:#25D366;color:#fff;font:700 14.5px 'Manrope',sans-serif;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;flex:0 0 auto;
+  transition:background-color .15s ease}
+.btn-wa:hover{background:#1DB954}
+.btn-wa:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.btn-wa img{width:20px;height:20px;display:block}
 .of-exito{text-align:center;margin-bottom:6px}
 .of-exito p{margin:0;font-size:13.5px;color:var(--oxford);line-height:1.45}
 .of-exito b{display:block;font-size:15px;font-weight:700;color:var(--ink);margin-bottom:2px}
@@ -690,7 +714,8 @@ body{
      nueva, así que se le pregunta lo mínimo y se le entrega esa tarea. */
   var CASOS = [
     { id:"envios-cot", prod:"envios", origen:"landing", nombre:"Envíos · a cotizar" },
-    { id:"pagos-link", prod:"pagos",  origen:"landing", nombre:"Pagos · a link de pago" }
+    { id:"pagos-link",   prod:"pagos", origen:"landing", nombre:"Pagos · link (A)" },
+    { id:"pagos-link-b", prod:"pagos", origen:"landing", nombre:"Pagos · link (B)" }
   ];
   var caso = "envios-cot";
   function C(){
@@ -698,6 +723,8 @@ body{
     return CASOS[0];
   }
   function delLanding(){ return C().origen === "landing"; }
+  /* Versión B del link de pago: tras activar métodos entrega el resumen */
+  function esLinkB(){ return caso === "pagos-link-b"; }
   var prod = "envios";
   var mqCel = window.matchMedia("(max-width: 768px)");
   var cel = mqCel.matches;
@@ -706,7 +733,7 @@ body{
 
   function inicial(){
     return { tipo:"empezando", nombre:PRELLENADO.empezando, tocado:false,
-             canales:[], giro:null, volumen:null, paso:0,
+             canales:[], giro:null, volumen:null, copiado:false, paso:0,
              extra:null, metodo:null, monto:null, factura:false, tipoLink:null, tyc:false, activado:false };
   }
   function P(){ return PROD[prod]; }
@@ -888,6 +915,14 @@ body{
       '</div></div>';
   }
 
+  /* El cobro que traía de la landing, en el lenguaje de lo que contestó */
+  function concepto(){
+    return S.giro === "productos" ? "Playera bordada" : "Asesoría de imagen";
+  }
+  var PALOMA_OK = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" ' +
+    'stroke="currentColor" stroke-width="3" stroke-linecap="round" ' +
+    'stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5L10 17.5L19 7"/></svg>';
+
   function cierre(){
     var p = P();
     if(delLanding() && prod === "envios") return cotizacion();
@@ -918,10 +953,24 @@ body{
           var bh = H.botones.map(function(b){
             return '<button type="button" class="' + b[1] + '" data-fin="1">' + b[0] + '</button>';
           }).join("");
-          tarjeta = '<div class="oferta neutra">' +
-            '<div class="of-exito"><p><b>' + H.titulo + '</b><br>' +
-            H.linea + '</p></div>' +
-            '<div class="of-btns">' + bh + '</div></div>';
+          tarjeta = esLinkB()
+            ? '<div class="oferta neutra resumen">' +
+                '<div class="res-fila">' +
+                  '<span class="res-c">' + concepto() + '</span>' +
+                  '<span class="res-m">$1,250.00</span></div>' +
+                '<div class="res-url"><span>t1pagos.mx/kr-8f2a</span>' +
+                  '<button type="button" class="res-copy" data-copiar="1" aria-pressed="' +
+                  (S.copiado ? "true" : "false") + '">' +
+                  (S.copiado ? PALOMA_OK : COPIAR) +
+                  (S.copiado ? "Copiado" : "Copiar") + '</button></div></div>' +
+              '<button type="button" class="btn-wa" data-fin="1">' +
+                '<img src="<!--RED_WA-->" alt="">Compartir por WhatsApp</button>' +
+              '<button type="button" class="linkSalida" data-fin="1">' +
+                'Ver detalles del link</button>'
+            : '<div class="oferta neutra">' +
+              '<div class="of-exito"><p><b>' + H.titulo + '</b><br>' +
+              H.linea + '</p></div>' +
+              '<div class="of-btns">' + bh + '</div></div>';
         } else {
           tarjeta = '<div class="oferta neutra">' +
             '<p class="of-l" style="margin-bottom:14px">' +
@@ -1263,6 +1312,11 @@ body{
     });
 
     /* Controles de las pantallas de la versión B */
+    var cop = root.querySelector("[data-copiar]");
+    if(cop) cop.addEventListener("click", function(){
+      S.copiado = true; entrada = false; render();
+    });
+
     root.querySelectorAll("[data-metodo]").forEach(function(b){
       b.addEventListener("click", function(){
         S.metodo = b.getAttribute("data-metodo");

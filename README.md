@@ -24,7 +24,8 @@ la tarea donde ya vive.
 | Caso | Preguntas | Termina en |
 |---|---|---|
 | Envíos · a cotizar | 1 o 2 | cuenta lista, el cupón de cashback y «Ver resultados de cotización» |
-| Pagos · a link de pago | 1 o 2 | «tu link está casi listo», activar métodos y «Ver mi link» |
+| Pagos · link (A) | 1 o 2 | activar métodos y «Ver mi link» |
+| Pagos · link (B) | 1 o 2 | activar métodos y el resumen: monto, URL, compartir por WhatsApp |
 
 ## Cómo editar
 
