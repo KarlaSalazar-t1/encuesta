@@ -23,8 +23,8 @@ la tarea donde ya vive.
 
 | Caso | Preguntas | Termina en |
 |---|---|---|
-| Envíos · a cotizar | 1 o 2 | cuenta lista, el cashback y «Ver resultados de cotización» |
-| Pagos · a link de pago | 2 | aceptar términos, activar métodos y «Ver mi link» |
+| Envíos · a cotizar | 1 o 2 | cuenta lista, el cupón de cashback y «Ver resultados de cotización» |
+| Pagos · a link de pago | 1 o 2 | «tu link está casi listo», activar métodos y «Ver mi link» |
 
 ## Cómo editar
 

@@ -361,14 +361,27 @@ body{
 .of-btns button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 /* Mock del link de pago */
 
-.premio{display:inline-flex;align-items:center;gap:8px;margin:18px 0 0;flex:0 0 auto;
-  background:var(--red-50);color:var(--red);border-radius:999px;padding:10px 18px;
-  font-size:13px;font-weight:700;line-height:1.35;max-width:100%;text-align:left}
-.premio svg{width:16px;height:16px;flex:0 0 auto}
-.finL .dico,.finL .of-cta{flex:0 0 auto}
-@media (max-width:768px){
-  .premio{font-size:12.5px;padding:10px 15px;align-items:flex-start}
+.oferta.cupon{
+  background:linear-gradient(152deg,#E4472F 0%,#DB3B2B 50%,#BE2B1C 100%);
+  color:#fff;box-shadow:0 10px 28px -12px rgba(190,43,28,.6);position:relative;overflow:hidden;
 }
+.cup-top{display:flex;align-items:center;justify-content:center;gap:10px}
+.cup-ico{display:grid;place-items:center;flex:0 0 auto}
+.cup-ico svg{width:19px;height:19px}
+.cup-lead{font-size:14px;font-weight:600;margin:0;color:rgba(255,255,255,.92)}
+.cup-n{font-size:40px;font-weight:800;letter-spacing:-.04em;line-height:1;margin:8px 0 0}
+.cup-n span{font-size:17px;font-weight:700;letter-spacing:0;margin-left:6px}
+.cup-l{font-size:14px;margin:10px 0 0;line-height:1.4;color:rgba(255,255,255,.9)}
+.cup-l b{font-weight:800;color:#fff}
+/* Troquel: línea punteada y las dos muescas del cupón */
+.corte{position:relative;height:0;margin:17px -22px 15px;border-top:1px dashed rgba(255,255,255,.5)}
+.corte::before,.corte::after{content:"";position:absolute;top:-11px;width:22px;height:22px;
+  border-radius:50%;background:#fff}
+.corte::before{left:-11px}
+.corte::after{right:-11px}
+.cupon .of-pie{color:rgba(255,255,255,.85);margin:0}
+.finL > .of-cta{max-width:420px}
+.finL .dico,.finL .of-cta{flex:0 0 auto}
 .linkSalida{background:none;border:0;color:var(--g500);font:500 13.5px 'Manrope',sans-serif;
   cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:6px;border-radius:6px}
 .linkSalida:hover{color:var(--ink)}
@@ -643,9 +656,7 @@ body{
                hecho:{ titulo:"¡Listo! Activaste tus métodos de pago",
                        linea:"Crea tu primer link de pago. ¿Qué quieres cobrar?",
                        botones:[["Un producto","b-sec"],["Un monto","b-sec"]] },
-               hechoLanding:{ titulo:"Tu link de pago está listo",
-                       linea:"Ya puedes compartirlo con tu cliente.",
-                       botones:[["Ver mi link","b-pri"]] } },
+               hechoLanding:{ botones:[["Ver mi link","b-pri"]] } },
       salida:"Ir al admin"
     }
   };
@@ -702,7 +713,7 @@ body{
     /* Del landing llega con una tarea en la mano: preguntar de más la retrasa. */
     if(delLanding()){
       if(prod === "envios") return S.tipo === "vendiendo" ? ["tipo","volumen"] : ["tipo"];
-      return ["tipo","giro"];
+      return S.tipo === "personal" ? ["tipo"] : ["tipo","giro"];
     }
     var r = RUTAS[S.tipo];
     return (S.tipo === "vendiendo" && prod === "envios") ? r.concat("volumen") : r;
@@ -860,8 +871,14 @@ body{
       '<div class="finL">' + CHECK +
         '<h3 id="q-fin" tabindex="-1">Tu cuenta está lista</h3>' +
         '<p class="sub">Ya puedes ver las tarifas de tu envío.</p>' +
-        '<p class="premio">' + REGALO_P +
-          '<span>10% de cashback en tu primera recarga · hasta $5,000 MXN</span></p>' +
+        '<div class="oferta cupon">' +
+          '<div class="cup-top"><span class="cup-ico">' + REGALO_P + '</span>' +
+            '<p class="cup-lead">Recibe hasta</p></div>' +
+          '<p class="cup-n">$5,000<span>MXN</span></p>' +
+          '<p class="cup-l"><b>10% de cashback</b> en tu primera recarga</p>' +
+          '<div class="corte"></div>' +
+          '<p class="of-pie">' + RELOJ + 'Solo por tiempo limitado</p>' +
+        '</div>' +
         '<button type="button" class="of-cta" data-fin="1">' +
           'Ver resultados de cotización</button>' +
       '</div></div>';
@@ -891,18 +908,25 @@ body{
             '<div class="of-btns col">' + botones + '</div>' +
           '</div></div>';
       } else {
-        var H = (delLanding() && a.hechoLanding) ? a.hechoLanding : a.hecho;
+        var esPagosLanding = delLanding() && prod === "pagos";
+        var H = (esPagosLanding && a.hechoLanding) ? a.hechoLanding : a.hecho;
         if(H && S.activado){
           var bh = H.botones.map(function(b){
             return '<button type="button" class="' + b[1] + '" data-fin="1">' + b[0] + '</button>';
           }).join("");
-          tarjeta = '<div class="oferta neutra">' +
-            '<div class="of-exito"><p><b>' + H.titulo + '</b><br>' +
-            H.linea + '</p></div>' +
-            '<div class="of-btns">' + bh + '</div></div>';
+          /* Del landing, el título y el subtítulo ya dicen que el link está listo;
+             repetirlo dentro de una tarjeta sobra, basta la acción. */
+          tarjeta = esPagosLanding
+            ? '<button type="button" class="of-cta" data-fin="1">' +
+              H.botones[0][0] + '</button>'
+            : '<div class="oferta neutra">' +
+              '<div class="of-exito"><p><b>' + H.titulo + '</b><br>' +
+              H.linea + '</p></div>' +
+              '<div class="of-btns">' + bh + '</div></div>';
         } else {
           tarjeta = '<div class="oferta neutra">' +
-            '<p class="of-l" style="margin-bottom:14px">' + a.linea + '</p>' + visual() +
+            (esPagosLanding ? ''
+              : '<p class="of-l" style="margin-bottom:14px">' + a.linea + '</p>') + visual() +
             (a.tyc
               ? '<button type="button" class="check-l centrado" data-x="tyc" role="checkbox" ' +
                 'aria-checked="' + (S.tyc ? "true" : "false") + '">' +
@@ -912,13 +936,20 @@ body{
         }
       }
 
+      var tituloFin = "¡Todo listo!", subFin = "Tu cuenta quedó configurada.";
+      if(delLanding() && prod === "pagos"){
+        tituloFin = S.activado ? "Tu link de pago está listo"
+                               : "Tu link de pago está casi listo";
+        subFin = S.activado ? "Ya puedes compartirlo con tu cliente."
+                            : "Solo falta activar tus métodos de pago.";
+      }
       return '<div class="modal modalFin' + (entrada ? " enter" : "") +
         '" role="dialog" aria-modal="true" aria-labelledby="q-fin">' +
         EQUIS +
         '<div class="confetti" id="confetti" aria-hidden="true"></div>' +
         '<div class="finL">' + CHECK +
-          '<h3 id="q-fin" tabindex="-1">¡Todo listo!</h3>' +
-          '<p class="sub">Tu cuenta quedó configurada.</p>' +
+          '<h3 id="q-fin" tabindex="-1">' + tituloFin + '</h3>' +
+          '<p class="sub">' + subFin + '</p>' +
           tarjeta +
         '</div></div>';
     }
