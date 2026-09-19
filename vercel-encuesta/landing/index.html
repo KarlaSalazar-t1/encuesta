@@ -690,9 +690,7 @@ body{
                        linea:"Crea tu primer link de pago. ¿Qué quieres cobrar?",
                        botones:[["Un producto","b-sec"],["Un monto","b-sec"]] },
                lineaLanding:"Solo activa tus métodos de pago.",
-               hechoLanding:{ titulo:"¡Listo! Ya puedes cobrar",
-                       linea:"Comparte tu link con tus clientes.",
-                       botones:[["Ver mi link","b-pri"]] } },
+               },
       salida:"Ir al admin"
     }
   };
@@ -723,8 +721,7 @@ body{
      nueva, así que se le pregunta lo mínimo y se le entrega esa tarea. */
   var CASOS = [
     { id:"envios-cot", prod:"envios", origen:"landing", nombre:"Envíos · a cotizar" },
-    { id:"pagos-link",   prod:"pagos", origen:"landing", nombre:"Pagos · link (A)" },
-    { id:"pagos-link-b", prod:"pagos", origen:"landing", nombre:"Pagos · link (B)" }
+    { id:"pagos-link", prod:"pagos", origen:"landing", nombre:"Pagos · link de pago" }
   ];
   var caso = "envios-cot";
   function C(){
@@ -732,8 +729,6 @@ body{
     return CASOS[0];
   }
   function delLanding(){ return C().origen === "landing"; }
-  /* Versión B del link de pago: tras activar métodos entrega el resumen */
-  function esLinkB(){ return caso === "pagos-link-b"; }
   var prod = "envios";
   var mqCel = window.matchMedia("(max-width: 768px)");
   var cel = mqCel.matches;
@@ -750,10 +745,9 @@ body{
      a quien empieza no tiene con qué responderlo. */
   function ruta(){
     /* Del landing llega con una tarea en la mano: preguntar de más la retrasa. */
-    if(delLanding()){
-      if(prod === "envios") return S.tipo === "vendiendo" ? ["tipo","volumen"] : ["tipo"];
-      return S.tipo === "personal" ? ["tipo"] : ["tipo","giro"];
-    }
+    /* Del landing el recorrido es el mismo para los dos productos: lo único
+       que cambia es la pantalla final. */
+    if(delLanding()) return S.tipo === "personal" ? ["tipo"] : ["tipo","giro"];
     var r = RUTAS[S.tipo];
     return (S.tipo === "vendiendo" && prod === "envios") ? r.concat("volumen") : r;
   }
@@ -957,12 +951,11 @@ body{
             '<div class="of-btns col">' + botones + '</div>' +
           '</div></div>';
       } else {
-        var H = (esPagosLanding && a.hechoLanding) ? a.hechoLanding : a.hecho;
-        if(H && S.activado){
-          var bh = H.botones.map(function(b){
+        if(S.activado && (esPagosLanding || a.hecho)){
+          var bh = (a.hecho ? a.hecho.botones : []).map(function(b){
             return '<button type="button" class="' + b[1] + '" data-fin="1">' + b[0] + '</button>';
           }).join("");
-          tarjeta = esLinkB()
+          tarjeta = esPagosLanding
             ? '<div class="oferta neutra resumen">' +
                 '<div class="res-fila">' +
                   '<span class="res-c">' + concepto() + '</span>' +
@@ -977,8 +970,8 @@ body{
               '<button type="button" class="linkSalida" data-fin="1">' +
                 'Ver detalles del link</button>'
             : '<div class="oferta neutra">' +
-              '<div class="of-exito"><p><b>' + H.titulo + '</b><br>' +
-              H.linea + '</p></div>' +
+              '<div class="of-exito"><p><b>' + a.hecho.titulo + '</b><br>' +
+              a.hecho.linea + '</p></div>' +
               '<div class="of-btns">' + bh + '</div></div>';
         } else {
           tarjeta = '<div class="oferta neutra">' +

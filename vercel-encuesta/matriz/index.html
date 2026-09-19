@@ -50,10 +50,6 @@ sup{color:var(--red);font-weight:800}
 .pie{margin-top:16px;font-size:13.5px;color:var(--g500);max-width:720px;line-height:1.6}
 .pie b{color:var(--ink)}
 
-.notas{margin-top:48px;border-top:1px solid var(--line);padding-top:28px;max-width:720px}
-.notas h2{font-size:19px;font-weight:700;letter-spacing:-.025em;margin:0 0 14px}
-.notas li{font-size:14.5px;color:var(--oxford);margin-bottom:14px;line-height:1.6}
-.notas b{color:var(--ink)}
 
 @media (max-width:768px){
   .wrap{padding:30px 18px 70px}
@@ -90,27 +86,6 @@ sup{color:var(--red);font-weight:800}
   El botón de la landing entra directo al flujo de crear tienda, así que de ese
   usuario no se recoge ningún dato de perfil.</p>
 
-  <div class="notas">
-    <h2>Lo que salta a la vista</h2>
-    <ul>
-      <li><b>El recorrido va de 0 a 5 pantallas.</b> El más largo es envíos de un
-      negocio que ya opera; el más corto, tienda desde la landing, que no
-      pregunta nada.</li>
-      <li><b>«Es para uso personal» corta a una sola pregunta en los cinco casos
-      con encuesta.</b> Está bien como salida rápida, pero de ese usuario no se
-      sabe nada más que eso.</li>
-      <li><b>En envíos desde cotización, «estoy empezando» y «uso personal» dan
-      exactamente el mismo recorrido</b> —una pregunta y al cierre—. La respuesta
-      no cambia nada de lo que ve el usuario; solo queda como dato.</li>
-      <li><b>El nombre del negocio y los canales de venta solo se preguntan
-      entrando en frío.</b> Quien llega desde la landing nunca los da, así que ese
-      dato no existe para esa cohorte.</li>
-      <li><b>Las dos versiones del link de pago comparten cuestionario.</b> Lo
-      único que cambia es la pantalla final, que es justo lo que se compara.</li>
-      <li><b>Solo envíos pregunta volumen</b>, y solo a quien ya opera: a quien
-      empieza no tiene con qué responderlo.</li>
-    </ul>
-  </div>
 </div>
 
 <script>
@@ -140,25 +115,18 @@ var R = [
   ["Pagos", "Es para uso personal", 0,0,0,0, 1,
    "Métodos de pago y términos", "Activar"],
 
-  ["Envíos desde cotización", "No, estoy empezando", 0,0,0,0, 1,
+  ["Envíos desde cotización", "No, estoy empezando", 0,0,1,0, 2,
    "«Tu cotización está lista» con el cupón de cashback", "Ver resultados de cotización"],
-  ["Envíos desde cotización", "Sí, ya estoy operando", 0,0,0,1, 2,
+  ["Envíos desde cotización", "Sí, ya estoy operando", 0,0,1,0, 2,
    "«Tu cotización está lista» con el cupón de cashback", "Ver resultados de cotización"],
   ["Envíos desde cotización", "Es para uso personal", 0,0,0,0, 1,
    "«Tu cotización está lista» con el cupón de cashback", "Ver resultados de cotización"],
 
-  ["Pagos desde link de pago (A)", "No, estoy empezando", 0,0,1,0, 2,
-   "Activar métodos y luego el acuse de que el link está listo", "Activar → Ver mi link"],
-  ["Pagos desde link de pago (A)", "Sí, ya estoy operando", 0,0,1,0, 2,
-   "Activar métodos y luego el acuse de que el link está listo", "Activar → Ver mi link"],
-  ["Pagos desde link de pago (A)", "Es para uso personal", 0,0,0,0, 1,
-   "Activar métodos y luego el acuse de que el link está listo", "Activar → Ver mi link"],
-
-  ["Pagos desde link de pago (B)", "No, estoy empezando", 0,0,1,0, 2,
+  ["Pagos desde link de pago", "No, estoy empezando", 0,0,1,0, 2,
    "Activar métodos y luego el resumen: monto, URL y compartir", "Activar → Compartir por WhatsApp"],
-  ["Pagos desde link de pago (B)", "Sí, ya estoy operando", 0,0,1,0, 2,
+  ["Pagos desde link de pago", "Sí, ya estoy operando", 0,0,1,0, 2,
    "Activar métodos y luego el resumen: monto, URL y compartir", "Activar → Compartir por WhatsApp"],
-  ["Pagos desde link de pago (B)", "Es para uso personal", 0,0,0,0, 1,
+  ["Pagos desde link de pago", "Es para uso personal", 0,0,0,0, 1,
    "Activar métodos y luego el resumen: monto, URL y compartir", "Activar → Compartir por WhatsApp"],
 
   ["Tienda desde crear tienda<sup>*</sup>", "No se pregunta", 0,0,0,0, 0,
