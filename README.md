@@ -18,16 +18,17 @@ de fondo y del cierre; en `/landing`, además de dónde llega el usuario.
 
 ## Los dos casos de `/landing`
 
-Quien llega desde la landing nueva ya dijo a qué viene, así que la encuesta se
-acorta y el modal no reimplementa el producto: confirma la cuenta y entrega
-la tarea donde ya vive.
+El cuestionario es el mismo de siempre: llegar desde la landing nueva no lo
+cambia. Lo único distinto es la pantalla final, que entrega la tarea con la
+que el usuario venía en vez de una oferta genérica.
 
 | Caso | Preguntas | Termina en |
 |---|---|---|
-| Envíos · a cotizar | 1 o 2 | cuenta lista, el cupón de cashback y «Ver resultados de cotización» |
-| Pagos · link de pago | 1 o 2 | activar métodos y el resumen: monto, URL y compartir por WhatsApp |
+| Envíos · a cotizar | las mismas que envíos | cuenta lista, el cupón de cashback y «Ver resultados de cotización» |
+| Pagos · link de pago | las mismas que pagos | activar métodos y el resumen: monto, URL y compartir por WhatsApp |
 
-Los dos casos pasan por las mismas preguntas; lo único que cambia es el cierre.
+Tienda desde la landing no pasa por encuesta: entra directo al flujo de crear
+tienda. Aparece en la matriz, no en el prototipo.
 
 ## Cómo editar
 

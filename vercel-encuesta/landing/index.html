@@ -744,10 +744,8 @@ body{
   /* El volumen solo se pregunta en envíos y solo a quien ya opera:
      a quien empieza no tiene con qué responderlo. */
   function ruta(){
-    /* Del landing llega con una tarea en la mano: preguntar de más la retrasa. */
-    /* Del landing el recorrido es el mismo para los dos productos: lo único
-       que cambia es la pantalla final. */
-    if(delLanding()) return S.tipo === "personal" ? ["tipo"] : ["tipo","giro"];
+    /* Llegar del landing no cambia el cuestionario: se recorre el mismo de
+       siempre y lo único distinto es la pantalla final. */
     var r = RUTAS[S.tipo];
     return (S.tipo === "vendiendo" && prod === "envios") ? r.concat("volumen") : r;
   }
