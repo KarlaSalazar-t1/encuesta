@@ -15,32 +15,36 @@ body{
   font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   line-height:1.45;-webkit-font-smoothing:antialiased;
 }
-.wrap{max-width:1180px;margin:0 auto;padding:48px 40px 90px}
+.wrap{max-width:1320px;margin:0 auto;padding:48px 40px 90px}
 h1{font-size:30px;font-weight:800;letter-spacing:-.035em;margin:0}
-.intro{font-size:15px;color:var(--g500);margin:12px 0 0;max-width:660px}
-.intro a{color:var(--ink)}
-h2{font-size:19px;font-weight:700;letter-spacing:-.025em;margin:52px 0 6px}
-h2 + p{font-size:14px;color:var(--g500);margin:0 0 18px;max-width:660px}
+.intro{font-size:15px;color:var(--g500);margin:12px 0 26px;max-width:680px}
 
 .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
-table{border-collapse:collapse;width:100%;min-width:760px;font-size:13.5px}
+table{border-collapse:collapse;width:100%;min-width:1080px;font-size:13.5px}
 th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);
-  white-space:nowrap}
+  vertical-align:top;white-space:nowrap}
 thead th{background:var(--g50);font-size:11.5px;font-weight:800;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--g500);border-bottom:1px solid var(--g200)}
+  text-transform:uppercase;color:var(--g500);border-bottom:1px solid var(--g200);
+  white-space:normal}
 tbody tr:last-child td{border-bottom:0}
 tbody tr:hover{background:#FCFCFC}
+/* Una línea más marcada donde empieza cada caso, para leer por bloques */
+tr.abre td{border-top:1px solid var(--g200)}
+tr.abre:first-child td{border-top:0}
 td.caso{font-weight:700}
 td.num{text-align:center;font-weight:800}
+th.c,td.c{text-align:center}
 .marca{color:var(--red);font-weight:800}
 .no{color:var(--g400)}
-th.c,td.c{text-align:center}
-.sep td{background:var(--g50);font-size:11.5px;font-weight:800;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--oxford);padding:9px 14px}
-.chico{font-size:12.5px;color:var(--g500);white-space:normal;min-width:190px}
+td.libre{white-space:normal;min-width:210px;color:var(--oxford)}
+td.cta{white-space:normal;min-width:150px;font-weight:600}
+sup{color:var(--red);font-weight:800}
 
-.notas{margin-top:52px;border-top:1px solid var(--line);padding-top:28px;max-width:720px}
-.notas h2{margin-top:0}
+.pie{margin-top:16px;font-size:13.5px;color:var(--g500);max-width:720px;line-height:1.6}
+.pie b{color:var(--ink)}
+
+.notas{margin-top:48px;border-top:1px solid var(--line);padding-top:28px;max-width:720px}
+.notas h2{font-size:19px;font-weight:700;letter-spacing:-.025em;margin:0 0 14px}
 .notas li{font-size:14.5px;color:var(--oxford);margin-bottom:14px;line-height:1.6}
 .notas b{color:var(--ink)}
 
@@ -53,13 +57,10 @@ th.c,td.c{text-align:center}
 
 <div class="wrap">
   <h1>Matriz de casos</h1>
-  <p class="intro">Todos los recorridos de la encuesta de alta: los tres productos
-  de la encuesta actual y los casos que llegan desde la landing nueva. Cada fila
-  se recorrió en el prototipo publicado, no se dedujo del código.</p>
+  <p class="intro">Todos los recorridos de la encuesta de alta. Cada fila se
+  recorrió en el prototipo publicado, pantalla por pantalla, así que describe lo
+  que hace hoy y no lo que debería hacer.</p>
 
-  <h2>Qué se pregunta</h2>
-  <p>La primera pregunta siempre se hace; a partir de ahí el recorrido depende
-  del producto, de dónde llega el usuario y de lo que conteste.</p>
   <div class="scroll">
     <table>
       <thead>
@@ -70,48 +71,35 @@ th.c,td.c{text-align:center}
           <th class="c">Canales</th>
           <th class="c">Giro</th>
           <th class="c">Volumen</th>
-          <th class="c">Total</th>
+          <th class="c">Preguntas</th>
+          <th>Pantalla final</th>
+          <th>CTA</th>
         </tr>
       </thead>
-      <tbody id="tabla1"></tbody>
+      <tbody id="tabla"></tbody>
     </table>
   </div>
-
-  <h2>Dónde termina</h2>
-  <p>El cierre depende del producto y de la entrada. En la versión B el mismo
-  botón, en vez de cerrar, continúa dentro del modal.</p>
-  <div class="scroll">
-    <table>
-      <thead>
-        <tr>
-          <th>Caso</th>
-          <th>Cierre</th>
-          <th>Botón</th>
-          <th>En versión B el botón lleva a</th>
-        </tr>
-      </thead>
-      <tbody id="tabla2"></tbody>
-    </table>
-  </div>
+  <p class="pie"><sup>*</sup> <b>Único caso que no pasa por la encuesta.</b>
+  El botón de la landing entra directo al flujo de crear tienda, así que de ese
+  usuario no se recoge ningún dato de perfil.</p>
 
   <div class="notas">
     <h2>Lo que salta a la vista</h2>
     <ul>
-      <li><b>El recorrido va de 1 a 5 pantallas.</b> El más largo es envíos de
-      un negocio que ya opera; el más corto, cualquier «uso personal» y envíos
-      desde la landing.</li>
-      <li><b>«Es para uso personal» corta a una sola pregunta en los seis casos.</b>
-      Está bien como salida rápida, pero significa que de ese usuario no se sabe
-      nada más que eso.</li>
-      <li><b>En envíos desde la landing, «estoy empezando» y «uso personal» dan
+      <li><b>El recorrido va de 0 a 5 pantallas.</b> El más largo es envíos de un
+      negocio que ya opera; el más corto, tienda desde la landing, que no
+      pregunta nada.</li>
+      <li><b>«Es para uso personal» corta a una sola pregunta en los cinco casos
+      con encuesta.</b> Está bien como salida rápida, pero de ese usuario no se
+      sabe nada más que eso.</li>
+      <li><b>En envíos desde cotización, «estoy empezando» y «uso personal» dan
       exactamente el mismo recorrido</b> —una pregunta y al cierre—. La respuesta
       no cambia nada de lo que ve el usuario; solo queda como dato.</li>
-      <li><b>El nombre del negocio y los canales de venta solo se preguntan en la
-      encuesta actual.</b> Quien entra desde la landing nunca los da, así que ese
-      dato no existe para esos usuarios.</li>
+      <li><b>El nombre del negocio y los canales de venta solo se preguntan
+      entrando en frío.</b> Quien llega desde la landing nunca los da, así que ese
+      dato no existe para esa cohorte.</li>
       <li><b>Las dos versiones del link de pago comparten cuestionario.</b> Lo
-      único que cambia es qué aparece después de activar métodos, que es
-      justamente lo que se está comparando.</li>
+      único que cambia es la pantalla final, que es justo lo que se compara.</li>
       <li><b>Solo envíos pregunta volumen</b>, y solo a quien ya opera: a quien
       empieza no tiene con qué responderlo.</li>
     </ul>
@@ -121,57 +109,67 @@ th.c,td.c{text-align:center}
 <script>
 var SI = '<span class="marca">✓</span>', NO = '<span class="no">—</span>';
 
-/* Cada fila se tomó recorriendo el prototipo publicado, pantalla por pantalla. */
-var FILAS = [
-  ["sep", "Encuesta actual · rutas / y /v-b"],
-  ["Envíos",  "No, estoy empezando", 1,0,1,0, 3],
-  ["Envíos",  "Sí, ya estoy operando", 1,1,1,1, 5],
-  ["Envíos",  "Es para uso personal", 0,0,0,0, 1],
-  ["Tienda",  "No, estoy empezando", 1,0,1,0, 3],
-  ["Tienda",  "Sí, ya estoy operando", 1,1,1,0, 4],
-  ["Tienda",  "Es para uso personal", 0,0,0,0, 1],
-  ["Pagos",   "No, estoy empezando", 1,0,1,0, 3],
-  ["Pagos",   "Sí, ya estoy operando", 1,1,1,0, 4],
-  ["Pagos",   "Es para uso personal", 0,0,0,0, 1],
-  ["sep", "Desde la landing nueva · /landing"],
-  ["Envíos · a cotizar", "No, estoy empezando", 0,0,0,0, 1],
-  ["Envíos · a cotizar", "Sí, ya estoy operando", 0,0,0,1, 2],
-  ["Envíos · a cotizar", "Es para uso personal", 0,0,0,0, 1],
-  ["Pagos · link (A y B)", "No, estoy empezando", 0,0,1,0, 2],
-  ["Pagos · link (A y B)", "Sí, ya estoy operando", 0,0,1,0, 2],
-  ["Pagos · link (A y B)", "Es para uso personal", 0,0,0,0, 1]
+/* caso · respuesta · nombre · canales · giro · volumen · total · pantalla final · CTA
+   Tomado recorriendo los prototipos publicados, no leyendo el código. */
+var R = [
+  ["Envíos", "No, estoy empezando", 1,0,1,0, 3,
+   "Modal rojo de cashback", "Recargar ahora"],
+  ["Envíos", "Sí, ya estoy operando", 1,1,1,1, 5,
+   "Modal rojo de cashback", "Recargar ahora"],
+  ["Envíos", "Es para uso personal", 0,0,0,0, 1,
+   "Modal rojo de cashback", "Recargar ahora"],
+
+  ["Tienda", "No, estoy empezando", 1,0,1,0, 3,
+   "Cierre con el mockup de productos", "Crear tienda"],
+  ["Tienda", "Sí, ya estoy operando", 1,1,1,0, 4,
+   "Cierre con el mockup de productos", "Crear tienda"],
+  ["Tienda", "Es para uso personal", 0,0,0,0, 1,
+   "Cierre con el mockup de productos", "Crear tienda"],
+
+  ["Pagos", "No, estoy empezando", 1,0,1,0, 3,
+   "Métodos de pago y términos", "Activar"],
+  ["Pagos", "Sí, ya estoy operando", 1,1,1,0, 4,
+   "Métodos de pago y términos", "Activar"],
+  ["Pagos", "Es para uso personal", 0,0,0,0, 1,
+   "Métodos de pago y términos", "Activar"],
+
+  ["Envíos desde cotización", "No, estoy empezando", 0,0,0,0, 1,
+   "«Tu cotización está lista» con el cupón de cashback", "Ver resultados de cotización"],
+  ["Envíos desde cotización", "Sí, ya estoy operando", 0,0,0,1, 2,
+   "«Tu cotización está lista» con el cupón de cashback", "Ver resultados de cotización"],
+  ["Envíos desde cotización", "Es para uso personal", 0,0,0,0, 1,
+   "«Tu cotización está lista» con el cupón de cashback", "Ver resultados de cotización"],
+
+  ["Pagos desde link de pago (A)", "No, estoy empezando", 0,0,1,0, 2,
+   "Activar métodos y luego el acuse de que el link está listo", "Activar → Ver mi link"],
+  ["Pagos desde link de pago (A)", "Sí, ya estoy operando", 0,0,1,0, 2,
+   "Activar métodos y luego el acuse de que el link está listo", "Activar → Ver mi link"],
+  ["Pagos desde link de pago (A)", "Es para uso personal", 0,0,0,0, 1,
+   "Activar métodos y luego el acuse de que el link está listo", "Activar → Ver mi link"],
+
+  ["Pagos desde link de pago (B)", "No, estoy empezando", 0,0,1,0, 2,
+   "Activar métodos y luego el resumen: monto, URL y compartir", "Activar → Compartir por WhatsApp"],
+  ["Pagos desde link de pago (B)", "Sí, ya estoy operando", 0,0,1,0, 2,
+   "Activar métodos y luego el resumen: monto, URL y compartir", "Activar → Compartir por WhatsApp"],
+  ["Pagos desde link de pago (B)", "Es para uso personal", 0,0,0,0, 1,
+   "Activar métodos y luego el resumen: monto, URL y compartir", "Activar → Compartir por WhatsApp"],
+
+  ["Tienda desde crear tienda<sup>*</sup>", "No se pregunta", 0,0,0,0, 0,
+   "Ninguna: entra directo al flujo de crear tienda", "—"]
 ];
 
-document.getElementById("tabla1").innerHTML = FILAS.map(function(f){
-  if(f[0] === "sep") return '<tr class="sep"><td colspan="7">' + f[1] + '</td></tr>';
-  return '<tr><td class="caso">' + f[0] + '</td><td>' + f[1] + '</td>' +
+var previo = null;
+document.getElementById("tabla").innerHTML = R.map(function(f){
+  var abre = f[0] !== previo;
+  previo = f[0];
+  return '<tr' + (abre ? ' class="abre"' : '') + '>' +
+    '<td class="caso">' + f[0] + '</td>' +
+    '<td>' + f[1] + '</td>' +
     [f[2], f[3], f[4], f[5]].map(function(v){
       return '<td class="c">' + (v ? SI : NO) + '</td>';
     }).join("") +
-    '<td class="num">' + f[6] + '</td></tr>';
-}).join("");
-
-var CIERRES = [
-  ["sep", "Encuesta actual"],
-  ["Envíos", "Modal rojo de cashback: «Te regalamos hasta $5,000 MXN extra para tus envíos»",
-   "Recargar ahora", "Recarga saldo, dentro del modal"],
-  ["Tienda", "«¡Todo listo!» con el mockup de productos",
-   "Crear tienda", "Prompt de tienda con IA, dentro del modal"],
-  ["Pagos", "«¡Todo listo!» · métodos de pago y términos",
-   "Activar", "Elegir producto o monto y crear el link"],
-  ["sep", "Desde la landing nueva"],
-  ["Envíos · a cotizar", "«Tu cotización está lista» con el cupón de cashback",
-   "Ver resultados de cotización", "—"],
-  ["Pagos · link (A)", "«Tu link de pago está listo» · activar métodos, luego el acuse",
-   "Activar → Ver mi link", "—"],
-  ["Pagos · link (B)", "Igual, pero al activar entrega el resumen: monto, URL y compartir",
-   "Activar → Compartir por WhatsApp", "—"]
-];
-
-document.getElementById("tabla2").innerHTML = CIERRES.map(function(f){
-  if(f[0] === "sep") return '<tr class="sep"><td colspan="4">' + f[1] + '</td></tr>';
-  return '<tr><td class="caso">' + f[0] + '</td>' +
-    '<td class="chico">' + f[1] + '</td><td>' + f[2] + '</td>' +
-    '<td class="chico">' + f[3] + '</td></tr>';
+    '<td class="num">' + f[6] + '</td>' +
+    '<td class="libre">' + f[7] + '</td>' +
+    '<td class="cta">' + f[8] + '</td></tr>';
 }).join("");
 </script>
