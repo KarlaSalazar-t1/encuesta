@@ -1,23 +1,38 @@
 #!/usr/bin/env python3
 """
-Construye el prototipo de la encuesta de alta.
+Construye los prototipos de encuesta de alta.
 
-Toma src/encuesta.src.html y le incrusta los logos, la animación de confeti
-y el mockup de tienda, de modo que el resultado sea un solo archivo HTML
-sin dependencias externas más allá de la tipografía y lottie-web.
+Cada fuente de src/ se convierte en un solo HTML con los logos, el confeti y
+las imágenes incrustados, sin más dependencias externas que la tipografía y
+lottie-web.
 
 Uso:   python3 src/build.py
-Salida: vercel-encuesta/index.html   (versión A)
-        vercel-encuesta/v-b/index.html (versión B, misma página)
-        opcion-b-registro.html       (registro de la maqueta de 2 columnas)
+Salida: vercel-encuesta/index.html          encuesta actual, versión A
+        vercel-encuesta/v-b/index.html      la misma, versión B
+        vercel-encuesta/landing/index.html  encuesta para la landing nueva
+        vercel-encuesta/opciones/index.html comparativa de cierres de envíos
+        opcion-b-registro.html              registro de la maqueta de 2 columnas
 """
-import re, os, json, base64, subprocess, zipfile, io
+import re, os, json, base64, subprocess, zipfile
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ICONOS = os.path.join(RAIZ, "iconos")
-SRC = os.path.join(RAIZ, "src", "encuesta.src.html")
+SITIO = os.path.join(RAIZ, "vercel-encuesta")
 
-src = open(SRC, encoding="utf-8").read()
+LOGOS = {
+    "ENVIOS": ("t1envios.svg", "T1envíos", "brand"),
+    "TIENDA": ("t1tienda.svg", "T1tienda", "brand"),
+    "PAGOS":  ("t1pagos.svg",  "T1pagos",  "brand"),
+    "T1":     ("t1-logotipo.svg", "T1", "iso"),
+}
+PAGOS = {
+    "VISA": "Property 1=visa.svg", "MC": "Property 1=mc.svg",
+    "AMEX": "Property 1=emex.svg", "SPEI": "Property 1=spei.svg",
+    "PAYPAL": "Property 1=paypal.svg", "KUESKI": "Property 1=kueski.svg",
+    "VCARNET": "Property 1=vcarnet.svg",
+}
+REDES = {"WA": "Whatsapp.png", "FB": "Facebook 2.png", "IG": "Insta.png"}
+
 
 def inline_svg(archivo, clase, alt):
     svg = open(os.path.join(ICONOS, archivo), encoding="utf-8").read().strip()
@@ -28,65 +43,83 @@ def inline_svg(archivo, clase, alt):
     svg = re.sub(r'<svg\s+width="[^"]*"\s+height="[^"]*"', "<svg " + attrs, svg, count=1)
     return svg.replace("\\", "\\\\").replace("'", "\\'")
 
-def sustituir(marcador, contenido):
-    global src
-    assert marcador in src, "falta el marcador " + marcador
-    src = src.replace(marcador, contenido)
 
-# ── Imagotipos de producto e isotipo T1 ──
-for clave, (archivo, alt, clase) in {
-    "ENVIOS": ("t1envios.svg", "T1envíos", "brand"),
-    "TIENDA": ("t1tienda.svg", "T1tienda", "brand"),
-    "PAGOS":  ("t1pagos.svg",  "T1pagos",  "brand"),
-    "T1":     ("t1-logotipo.svg", "T1", "iso"),
-}.items():
-    sustituir("<!--LOGO_%s-->" % clave, inline_svg(archivo, clase, alt))
+def b64(ruta, tipo="png"):
+    return "data:image/%s;base64,%s" % (
+        tipo, base64.b64encode(open(ruta, "rb").read()).decode())
 
-# ── Métodos de pago ──
-for clave, archivo in {
-    "VISA": "Property 1=visa.svg", "MC": "Property 1=mc.svg",
-    "AMEX": "Property 1=emex.svg", "SPEI": "Property 1=spei.svg",
-    "PAYPAL": "Property 1=paypal.svg", "KUESKI": "Property 1=kueski.svg",
-    "VCARNET": "Property 1=vcarnet.svg",
-}.items():
-    sustituir("<!--PAY_%s-->" % clave, inline_svg(archivo, None, clave.title()))
 
-# ── Mockup de tienda: se reduce a 2x del tamaño de uso antes de incrustarlo ──
-tmp = os.path.join(RAIZ, "src", "_tienda@2x.png")
-subprocess.run(["sips", "-Z", "448", os.path.join(ICONOS, "img tienda.png"),
-                "--out", tmp], capture_output=True)
-fuente = tmp if os.path.exists(tmp) else os.path.join(ICONOS, "img tienda.png")
-sustituir("<!--IMG_PRODUCTOS-->",
-          "data:image/png;base64," + base64.b64encode(open(fuente, "rb").read()).decode())
-if os.path.exists(tmp):
-    os.remove(tmp)
+def mockup_tienda():
+    """El mockup viene a 635px; se reduce a 2x del tamaño de uso."""
+    tmp = os.path.join(RAIZ, "src", "_tienda@2x.png")
+    subprocess.run(["sips", "-Z", "448", os.path.join(ICONOS, "img tienda.png"),
+                    "--out", tmp], capture_output=True)
+    fuente = tmp if os.path.exists(tmp) else os.path.join(ICONOS, "img tienda.png")
+    dato = b64(fuente)
+    if os.path.exists(tmp):
+        os.remove(tmp)
+    return dato
 
-# ── Confeti: el .lottie es un zip; se extrae el JSON y se minifica ──
-with zipfile.ZipFile(os.path.join(RAIZ, "celebrate.lottie")) as z:
-    nombre = [n for n in z.namelist() if n.startswith("animations/")][0]
-    lottie = json.loads(z.read(nombre).decode("utf-8"))
-src = re.sub(r"/\*LOTTIE\*/.*?/\*LOTTIE\*/",
-             lambda m: json.dumps(lottie, separators=(",", ":"), ensure_ascii=False),
-             src, count=1, flags=re.S)
+
+def confeti():
+    """El .lottie es un zip; se saca el JSON de la animación y se minifica."""
+    with zipfile.ZipFile(os.path.join(RAIZ, "celebrate.lottie")) as z:
+        nombre = [n for n in z.namelist() if n.startswith("animations/")][0]
+        return json.dumps(json.loads(z.read(nombre).decode("utf-8")),
+                          separators=(",", ":"), ensure_ascii=False)
+
+
+TIENDA_B64 = mockup_tienda()
+LOTTIE = confeti()
+
+
+def procesar(nombre_fuente):
+    src = open(os.path.join(RAIZ, "src", nombre_fuente), encoding="utf-8").read()
+
+    def pon(marcador, contenido, requerido=True):
+        nonlocal src
+        assert not requerido or marcador in src, "falta el marcador " + marcador
+        src = src.replace(marcador, contenido)
+
+    for clave, (archivo, alt, clase) in LOGOS.items():
+        pon("<!--LOGO_%s-->" % clave, inline_svg(archivo, clase, alt))
+    for clave, archivo in PAGOS.items():
+        pon("<!--PAY_%s-->" % clave, inline_svg(archivo, None, clave.title()))
+    for clave, archivo in REDES.items():
+        # Solo la encuesta de la landing comparte el link por redes
+        pon("<!--RED_%s-->" % clave, b64(os.path.join(ICONOS, archivo)), requerido=False)
+    pon("<!--IMG_PRODUCTOS-->", TIENDA_B64)
+    src = re.sub(r"/\*LOTTIE\*/.*?/\*LOTTIE\*/", lambda m: LOTTIE, src, count=1, flags=re.S)
+    return src
+
 
 def pagina(cuerpo):
     return ('<!doctype html>\n<html lang="es">\n<head>\n<meta charset="utf-8">\n'
             '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
             '</head>\n<body>\n' + cuerpo + '\n</body>\n</html>\n')
 
-sitio = os.path.join(RAIZ, "vercel-encuesta")
-os.makedirs(os.path.join(sitio, "v-b"), exist_ok=True)
-open(os.path.join(sitio, "index.html"), "w", encoding="utf-8").write(pagina(src))
-open(os.path.join(sitio, "v-b", "index.html"), "w", encoding="utf-8").write(pagina(src))
-json.dump({"cleanUrls": True}, open(os.path.join(sitio, "vercel.json"), "w"), indent=2)
 
-registro = src.replace('var VARIANTE_FIJA = "A";', 'var VARIANTE_FIJA = "B";', 1)
+def escribe(ruta_rel, contenido):
+    destino = os.path.join(SITIO, ruta_rel)
+    os.makedirs(os.path.dirname(destino), exist_ok=True)
+    open(destino, "w", encoding="utf-8").write(contenido)
+
+
+encuesta = procesar("encuesta.src.html")
+escribe("index.html", pagina(encuesta))
+escribe("v-b/index.html", pagina(encuesta))
+
+landing = procesar("landing.src.html")
+escribe("landing/index.html", pagina(landing))
+
+# /opciones no lleva assets: se copia tal cual dentro del mismo esqueleto
+opciones = open(os.path.join(RAIZ, "src", "opciones.src.html"), encoding="utf-8").read()
+escribe("opciones/index.html", pagina(opciones))
+
+json.dump({"cleanUrls": True}, open(os.path.join(SITIO, "vercel.json"), "w"), indent=2)
+
+registro = encuesta.replace('var VARIANTE_FIJA = "A";', 'var VARIANTE_FIJA = "B";', 1)
 open(os.path.join(RAIZ, "opcion-b-registro.html"), "w", encoding="utf-8").write(pagina(registro))
 
-# /opciones · comparativa de propuestas para la pantalla final de envios.
-# No lleva assets incrustados: se copia tal cual dentro del mismo esqueleto.
-opciones = open(os.path.join(RAIZ, "src", "opciones.src.html"), encoding="utf-8").read()
-os.makedirs(os.path.join(sitio, "opciones"), exist_ok=True)
-open(os.path.join(sitio, "opciones", "index.html"), "w", encoding="utf-8").write(pagina(opciones))
-
-print("listo ·", len(src), "bytes ·", len(opciones), "bytes en /opciones")
+print("listo · encuesta %d · landing %d · opciones %d bytes"
+      % (len(encuesta), len(landing), len(opciones)))
