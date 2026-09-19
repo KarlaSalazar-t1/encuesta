@@ -407,8 +407,8 @@ body{
   .ofPanel{margin-top:30px}
   /* En angosto la foto cede ancho para que los botones respiren */
   .oferta{padding:18px}
-  /* Ancho fijo por logo para que entren exactamente 4 por fila */
-  .of-pagos{max-width:196px;margin:0 auto 16px;gap:12px}
+  /* Ancho fijo por logo para que los seis queden en dos filas de tres */
+  .of-pagos{max-width:141px;margin:0 auto 16px;gap:12px}
   .of-pago{width:37px;justify-content:center}
   .of-pago svg{max-width:100%;height:auto;max-height:24px}
   .of-row{flex-direction:column;gap:14px}
@@ -812,10 +812,11 @@ body{
   var IMG_PRODUCTOS = '<!--IMG_PRODUCTOS-->';
 
   var METODOS = ['<!--PAY_VISA-->','<!--PAY_MC-->','<!--PAY_AMEX-->','<!--PAY_SPEI-->',
-                 '<!--PAY_PAYPAL-->','<!--PAY_KUESKI-->','<!--PAY_VCARNET-->'];
-  var PAY_TARJETAS = METODOS[0] + METODOS[1] + METODOS[2] + METODOS[6];
+                 '<!--PAY_KUESKI-->','<!--PAY_VCARNET-->'];
+  /* Por índice, para que cada SVG se incruste una sola vez.
+     Orden: visa · mastercard · amex · spei · kueski · carnet */
+  var PAY_TARJETAS = METODOS[0] + METODOS[1] + METODOS[2] + METODOS[5];
   var PAY_SPEI = METODOS[3];
-  var PAY_OTROS = METODOS[4] + METODOS[5];
   function visual(){
     return '<div class="of-pagos">' + METODOS.map(function(m){
       return '<span class="of-pago">' + m + '</span>';

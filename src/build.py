@@ -28,7 +28,7 @@ LOGOS = {
 PAGOS = {
     "VISA": "Property 1=visa.svg", "MC": "Property 1=mc.svg",
     "AMEX": "Property 1=emex.svg", "SPEI": "Property 1=spei.svg",
-    "PAYPAL": "Property 1=paypal.svg", "KUESKI": "Property 1=kueski.svg",
+    "KUESKI": "Property 1=kueski.svg",
     "VCARNET": "Property 1=vcarnet.svg",
 }
 REDES = {"WA": "Whatsapp.png", "FB": "Facebook 2.png", "IG": "Insta.png"}

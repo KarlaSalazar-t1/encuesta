@@ -428,8 +428,8 @@ body{
   .ofPanel{margin-top:30px}
   /* En angosto la foto cede ancho para que los botones respiren */
   .oferta{padding:18px}
-  /* Ancho fijo por logo para que entren exactamente 4 por fila */
-  .of-pagos{max-width:196px;margin:0 auto 16px;gap:12px}
+  /* Ancho fijo por logo para que los seis queden en dos filas de tres */
+  .of-pagos{max-width:141px;margin:0 auto 16px;gap:12px}
   .of-pago{width:37px;justify-content:center}
   .of-pago svg{max-width:100%;height:auto;max-height:24px}
   .of-row{flex-direction:column;gap:14px}
@@ -656,7 +656,11 @@ body{
                hecho:{ titulo:"¡Listo! Activaste tus métodos de pago",
                        linea:"Crea tu primer link de pago. ¿Qué quieres cobrar?",
                        botones:[["Un producto","b-sec"],["Un monto","b-sec"]] },
-               hechoLanding:{ botones:[["Ver mi link","b-pri"]] } },
+               lineaLanding:"Tu link de pago está casi listo. " +
+                            "Solo falta activar tus métodos de pago.",
+               hechoLanding:{ titulo:"Tu link de pago está listo",
+                       linea:"Ya puedes compartirlo con tu cliente.",
+                       botones:[["Ver mi link","b-pri"]] } },
       salida:"Ir al admin"
     }
   };
@@ -852,10 +856,11 @@ body{
   var IMG_PRODUCTOS = '<!--IMG_PRODUCTOS-->';
 
   var METODOS = ['<!--PAY_VISA-->','<!--PAY_MC-->','<!--PAY_AMEX-->','<!--PAY_SPEI-->',
-                 '<!--PAY_PAYPAL-->','<!--PAY_KUESKI-->','<!--PAY_VCARNET-->'];
-  var PAY_TARJETAS = METODOS[0] + METODOS[1] + METODOS[2] + METODOS[6];
+                 '<!--PAY_KUESKI-->','<!--PAY_VCARNET-->'];
+  /* Por índice, para que cada SVG se incruste una sola vez.
+     Orden: visa · mastercard · amex · spei · kueski · carnet */
+  var PAY_TARJETAS = METODOS[0] + METODOS[1] + METODOS[2] + METODOS[5];
   var PAY_SPEI = METODOS[3];
-  var PAY_OTROS = METODOS[4] + METODOS[5];
   function visual(){
     return '<div class="of-pagos">' + METODOS.map(function(m){
       return '<span class="of-pago">' + m + '</span>';
@@ -869,8 +874,8 @@ body{
       '" role="dialog" aria-modal="true" aria-labelledby="q-fin">' + EQUIS +
       '<div class="confetti" id="confetti" aria-hidden="true"></div>' +
       '<div class="finL">' + CHECK +
-        '<h3 id="q-fin" tabindex="-1">Tu cuenta está lista</h3>' +
-        '<p class="sub">Ya puedes ver las tarifas de tu envío.</p>' +
+        '<h3 id="q-fin" tabindex="-1">Tu cotización está lista</h3>' +
+        '<p class="sub">Tu cuenta quedó configurada.</p>' +
         '<div class="oferta cupon">' +
           '<div class="cup-top"><span class="cup-ico">' + REGALO_P + '</span>' +
             '<p class="cup-lead">Recibe hasta</p></div>' +
@@ -914,19 +919,15 @@ body{
           var bh = H.botones.map(function(b){
             return '<button type="button" class="' + b[1] + '" data-fin="1">' + b[0] + '</button>';
           }).join("");
-          /* Del landing, el título y el subtítulo ya dicen que el link está listo;
-             repetirlo dentro de una tarjeta sobra, basta la acción. */
-          tarjeta = esPagosLanding
-            ? '<button type="button" class="of-cta" data-fin="1">' +
-              H.botones[0][0] + '</button>'
-            : '<div class="oferta neutra">' +
-              '<div class="of-exito"><p><b>' + H.titulo + '</b><br>' +
-              H.linea + '</p></div>' +
-              '<div class="of-btns">' + bh + '</div></div>';
+          tarjeta = '<div class="oferta neutra">' +
+            '<div class="of-exito"><p><b>' + H.titulo + '</b><br>' +
+            H.linea + '</p></div>' +
+            '<div class="of-btns">' + bh + '</div></div>';
         } else {
           tarjeta = '<div class="oferta neutra">' +
-            (esPagosLanding ? ''
-              : '<p class="of-l" style="margin-bottom:14px">' + a.linea + '</p>') + visual() +
+            '<p class="of-l" style="margin-bottom:14px">' +
+            ((esPagosLanding && a.lineaLanding) ? a.lineaLanding : a.linea) + '</p>' +
+            visual() +
             (a.tyc
               ? '<button type="button" class="check-l centrado" data-x="tyc" role="checkbox" ' +
                 'aria-checked="' + (S.tyc ? "true" : "false") + '">' +
@@ -936,20 +937,13 @@ body{
         }
       }
 
-      var tituloFin = "¡Todo listo!", subFin = "Tu cuenta quedó configurada.";
-      if(delLanding() && prod === "pagos"){
-        tituloFin = S.activado ? "Tu link de pago está listo"
-                               : "Tu link de pago está casi listo";
-        subFin = S.activado ? "Ya puedes compartirlo con tu cliente."
-                            : "Solo falta activar tus métodos de pago.";
-      }
       return '<div class="modal modalFin' + (entrada ? " enter" : "") +
         '" role="dialog" aria-modal="true" aria-labelledby="q-fin">' +
         EQUIS +
         '<div class="confetti" id="confetti" aria-hidden="true"></div>' +
         '<div class="finL">' + CHECK +
-          '<h3 id="q-fin" tabindex="-1">' + tituloFin + '</h3>' +
-          '<p class="sub">' + subFin + '</p>' +
+          '<h3 id="q-fin" tabindex="-1">¡Todo listo!</h3>' +
+          '<p class="sub">Tu cuenta quedó configurada.</p>' +
           tarjeta +
         '</div></div>';
     }
