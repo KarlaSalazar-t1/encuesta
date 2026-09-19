@@ -368,41 +368,13 @@ body{
 .of-btns button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 /* Mock del link de pago */
 
-.cotiza{width:100%;max-width:430px;margin:20px 0 4px}
-.cotiza .fila{margin-bottom:8px}
-.cot-n{flex:1;min-width:0;font-size:14px;font-weight:700;color:var(--ink);text-align:left}
-.cot-t{font-size:13px;color:var(--g500);white-space:nowrap}
-.cot-p{font-size:15px;font-weight:800;color:var(--ink);margin-left:16px;white-space:nowrap}
-.cot-nota{font-size:13px;color:var(--oxford);margin:10px 0 0;display:flex;
-  align-items:center;justify-content:center;gap:7px}
-.cot-nota b{color:var(--red);font-weight:800}
-.cot-nota svg{width:15px;height:15px;flex:0 0 auto}
-.cotiza,.cot-nota,.linkBox,.redes{flex:0 0 auto}
+.premio{display:inline-flex;align-items:center;gap:8px;margin:18px 0 0;flex:0 0 auto;
+  background:var(--red-50);color:var(--red);border-radius:999px;padding:10px 18px;
+  font-size:13px;font-weight:700;line-height:1.35;max-width:100%;text-align:left}
+.premio svg{width:16px;height:16px;flex:0 0 auto}
 .finL .dico,.finL .of-cta{flex:0 0 auto}
-.linkBox{width:100%;max-width:430px;margin:20px 0 0;display:flex;align-items:center;
-  gap:10px;background:var(--g50);border:1px solid var(--line);border-radius:10px;
-  padding:0 6px 0 16px;height:50px}
-.linkU{flex:1;min-width:0;font-size:14px;font-weight:600;color:var(--ink);
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}
-.linkCopy{flex:0 0 auto;height:38px;padding:0 14px;border:0;border-radius:8px;
-  background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.08);cursor:pointer;
-  font:700 13px 'Manrope',sans-serif;color:var(--ink);display:inline-flex;
-  align-items:center;gap:7px;transition:background-color .15s ease}
-.linkCopy:hover{background:var(--g100)}
-.linkCopy:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.linkCopy[aria-pressed="true"]{color:var(--green)}
-.redes{display:flex;align-items:center;justify-content:center;gap:12px;margin:18px 0 0}
-.redes p{font-size:13px;color:var(--g500);margin:0 2px 0 0}
-.redes button{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);
-  background:#fff;cursor:pointer;display:grid;place-items:center;padding:0;
-  transition:border-color .15s ease, background-color .15s ease}
-.redes button:hover{background:var(--g50);border-color:var(--g200)}
-.redes button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.redes img{width:22px;height:22px;display:block}
 @media (max-width:768px){
-  .cot-t{display:none}
-  .linkBox{padding-left:12px}
-  .linkU{font-size:13px}
+  .premio{font-size:12.5px;padding:10px 15px;align-items:flex-start}
 }
 .linkSalida{background:none;border:0;color:var(--g500);font:500 13.5px 'Manrope',sans-serif;
   cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:6px;border-radius:6px}
@@ -677,7 +649,10 @@ body{
                botones:[["Activar","b-pri"]],
                hecho:{ titulo:"¡Listo! Activaste tus métodos de pago",
                        linea:"Crea tu primer link de pago. ¿Qué quieres cobrar?",
-                       botones:[["Un producto","b-sec"],["Un monto","b-sec"]] } },
+                       botones:[["Un producto","b-sec"],["Un monto","b-sec"]] },
+               hechoLanding:{ titulo:"Tu link de pago está listo",
+                       linea:"Ya puedes compartirlo con tu cliente.",
+                       botones:[["Ver mi link","b-pri"]] } },
       salida:"Ir al admin"
     }
   };
@@ -707,13 +682,10 @@ body{
      «cero» = entra en frío. «landing» = ya dijo a qué viene desde la landing
      nueva, así que se le pregunta lo mínimo y se le entrega esa tarea. */
   var CASOS = [
-    { id:"envios-cero", prod:"envios", origen:"cero",    nombre:"Envíos · desde 0" },
-    { id:"envios-cot",  prod:"envios", origen:"landing", nombre:"Envíos · a cotizar" },
-    { id:"tienda-cero", prod:"tienda", origen:"cero",    nombre:"Tienda" },
-    { id:"pagos-cero",  prod:"pagos",  origen:"cero",    nombre:"Pagos · desde 0" },
-    { id:"pagos-link",  prod:"pagos",  origen:"landing", nombre:"Pagos · a link de pago" }
+    { id:"envios-cot", prod:"envios", origen:"landing", nombre:"Envíos · a cotizar" },
+    { id:"pagos-link", prod:"pagos",  origen:"landing", nombre:"Pagos · a link de pago" }
   ];
-  var caso = "envios-cero";
+  var caso = "envios-cot";
   function C(){
     for(var i = 0; i < CASOS.length; i++) if(CASOS[i].id === caso) return CASOS[i];
     return CASOS[0];
@@ -727,7 +699,7 @@ body{
 
   function inicial(){
     return { tipo:"empezando", nombre:PRELLENADO.empezando, tocado:false,
-             canales:[], giro:null, volumen:null, tarifa:0, copiado:false, paso:0,
+             canales:[], giro:null, volumen:null, paso:0,
              extra:null, metodo:null, monto:null, factura:false, tipoLink:null, tyc:false, activado:false };
   }
   function P(){ return PROD[prod]; }
@@ -868,9 +840,6 @@ body{
     '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">' +
     '<path d="M1.5 1.5l11 11M12.5 1.5l-11 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' +
     '</svg></button>';
-  var PALOMA_V = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" ' +
-    'stroke="#51AF70" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" ' +
-    'aria-hidden="true"><path d="M5 12.5L10 17.5L19 7"/></svg>';
   var RELOJ = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
     'stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
     '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 1.9"/></svg>';
@@ -889,67 +858,25 @@ body{
     }).join("") + '</div>';
   }
 
-  /* Llega del landing habiendo cotizado: se le devuelve la cotización, no una oferta */
-  var TARIFAS = [["Estafeta","2 a 3 días","$148.00"],
-                 ["99minutos","Entrega hoy","$189.00"],
-                 ["FedEx","1 a 2 días","$215.00"]];
-  var CONCEPTOS = { productos:"Playera bordada", servicios:"Asesoría de imagen",
-                    ambos:"Asesoría de imagen" };
-
+  /* El modal no reimplementa el cotizador: confirma la cuenta, deja puesto el
+     cashback y manda a ver las tarifas donde ya viven. */
   function cotizacion(){
-    var filas = TARIFAS.map(function(t, i){
-      return '<button type="button" class="fila" data-cot="' + i + '" aria-pressed="' +
-        (S.tarifa === i ? "true" : "false") + '">' + marca("radio") +
-        '<span class="cot-n">' + t[0] + '</span>' +
-        '<span class="cot-t">' + t[1] + '</span>' +
-        '<span class="cot-p">' + t[2] + '</span></button>';
-    }).join("");
-    return '<div class="modal modalFin' + (entrada ? " enter" : "") +
-      '" role="dialog" aria-modal="true" aria-labelledby="q-fin">' + EQUIS +
-      '<div class="finL">' + CHECK +
-        '<h3 id="q-fin" tabindex="-1">Tu cotización está lista</h3>' +
-        '<p class="sub">Ciudad de México → Monterrey · 2 kg · 30×20×15 cm</p>' +
-        '<div class="cotiza">' + filas + '</div>' +
-        '<p class="cot-nota">' + REGALO_P +
-          'Tu primera recarga tiene <b>10% de cashback</b></p>' +
-        '<button type="button" class="of-cta" data-fin="1">Continuar con ' +
-          TARIFAS[S.tarifa][0] + '</button>' +
-      '</div></div>';
-  }
-
-  /* Llega del landing habiendo empezado un link de pago: se le entrega el link */
-  function linkPago(){
-    var concepto = CONCEPTOS[S.giro] || "Asesoría de imagen";
     return '<div class="modal modalFin' + (entrada ? " enter" : "") +
       '" role="dialog" aria-modal="true" aria-labelledby="q-fin">' + EQUIS +
       '<div class="confetti" id="confetti" aria-hidden="true"></div>' +
       '<div class="finL">' + CHECK +
-        '<h3 id="q-fin" tabindex="-1">Tu link de pago está listo</h3>' +
-        '<p class="sub">Cobra <b>$1,250.00</b> por ' + concepto + '.</p>' +
-        '<div class="linkBox">' +
-          '<span class="linkU">t1pagos.mx/kr-8f2a</span>' +
-          '<button type="button" class="linkCopy" data-copiar="1" aria-pressed="' +
-            (S.copiado ? "true" : "false") + '">' +
-            (S.copiado ? PALOMA_V : COPIAR) + (S.copiado ? "Copiado" : "Copiar") +
-          '</button>' +
-        '</div>' +
-        '<div class="redes">' +
-          '<p>Compártelo por</p>' +
-          '<button type="button" aria-label="WhatsApp" data-fin="1">' +
-            '<img src="data:image/png;base64,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" alt=""></button>' +
-          '<button type="button" aria-label="Facebook" data-fin="1">' +
-            '<img src="data:image/png;base64,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" alt=""></button>' +
-          '<button type="button" aria-label="Instagram" data-fin="1">' +
-            '<img src="data:image/png;base64,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" alt=""></button>' +
-        '</div>' +
-        '<button type="button" class="of-cta" data-fin="1" ' +
-          'style="margin-top:22px">Ir a mis links</button>' +
+        '<h3 id="q-fin" tabindex="-1">Tu cuenta está lista</h3>' +
+        '<p class="sub">Ya puedes ver las tarifas de tu envío.</p>' +
+        '<p class="premio">' + REGALO_P +
+          '<span>10% de cashback en tu primera recarga · hasta $5,000 MXN</span></p>' +
+        '<button type="button" class="of-cta" data-fin="1">' +
+          'Ver resultados de cotización</button>' +
       '</div></div>';
   }
 
   function cierre(){
     var p = P();
-    if(delLanding()) return prod === "envios" ? cotizacion() : linkPago();
+    if(delLanding() && prod === "envios") return cotizacion();
 
     /* Sin oferta: el cierre se queda en una columna */
     if(!p.cupon){
@@ -971,13 +898,14 @@ body{
             '<div class="of-btns col">' + botones + '</div>' +
           '</div></div>';
       } else {
-        if(a.hecho && S.activado){
-          var bh = a.hecho.botones.map(function(b){
+        var H = (delLanding() && a.hechoLanding) ? a.hechoLanding : a.hecho;
+        if(H && S.activado){
+          var bh = H.botones.map(function(b){
             return '<button type="button" class="' + b[1] + '" data-fin="1">' + b[0] + '</button>';
           }).join("");
           tarjeta = '<div class="oferta neutra">' +
-            '<div class="of-exito"><p><b>' + a.hecho.titulo + '</b><br>' +
-            a.hecho.linea + '</p></div>' +
+            '<div class="of-exito"><p><b>' + H.titulo + '</b><br>' +
+            H.linea + '</p></div>' +
             '<div class="of-btns">' + bh + '</div></div>';
         } else {
           tarjeta = '<div class="oferta neutra">' +
@@ -1302,7 +1230,9 @@ body{
         var principal = b.classList.contains("of-cta") || b.classList.contains("b-pri") ||
                         b.classList.contains("b-ia") || b.classList.contains("b-sec");
         if(b.getAttribute("aria-disabled") === "true") return;
-        if(version === "B" && prod === "pagos" && !S.activado && principal){
+        /* Aquí el paso de activar métodos no depende de la versión: es parte
+           del camino que llega del landing a crear su link. */
+        if(prod === "pagos" && !S.activado && principal){
           S.activado = true; entrada = false; render(); return;
         }
         if(version === "B" && principal && !S.extra && FLUJO[prod]){
@@ -1313,16 +1243,6 @@ body{
     });
 
     /* Controles de las pantallas de la versión B */
-    root.querySelectorAll("[data-cot]").forEach(function(b){
-      b.addEventListener("click", function(){
-        S.tarifa = +b.getAttribute("data-cot"); entrada = false; render();
-      });
-    });
-    var cop = root.querySelector("[data-copiar]");
-    if(cop) cop.addEventListener("click", function(){
-      S.copiado = true; entrada = false; render();
-    });
-
     root.querySelectorAll("[data-metodo]").forEach(function(b){
       b.addEventListener("click", function(){
         S.metodo = b.getAttribute("data-metodo");

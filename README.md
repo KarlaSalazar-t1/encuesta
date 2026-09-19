@@ -15,19 +15,16 @@ administrador de T1envíos, T1tienda y T1pagos.
 El selector de arriba cambia el caso: en las dos primeras, el producto del panel
 de fondo y del cierre; en `/landing`, además de dónde llega el usuario.
 
-## Los cinco casos de `/landing`
+## Los dos casos de `/landing`
 
-Quien entra **desde 0** hace la encuesta completa y termina en el cierre del
-producto. Quien llega **desde la landing** ya dijo a qué viene, así que se le
-pregunta lo mínimo y el cierre le entrega esa tarea en vez de una oferta.
+Quien llega desde la landing nueva ya dijo a qué viene, así que la encuesta se
+acorta y el modal no reimplementa el producto: confirma la cuenta y entrega
+la tarea donde ya vive.
 
 | Caso | Preguntas | Termina en |
 |---|---|---|
-| Envíos · desde 0 | hasta 5 | modal de cashback |
-| Envíos · a cotizar | 1 o 2 | la cotización, con tarifas a elegir |
-| Tienda | 4 | el cierre de tienda actual |
-| Pagos · desde 0 | 4 | el cierre de pagos actual |
-| Pagos · a link de pago | 2 | el link creado, listo para compartir |
+| Envíos · a cotizar | 1 o 2 | cuenta lista, el cashback y «Ver resultados de cotización» |
+| Pagos · a link de pago | 2 | aceptar términos, activar métodos y «Ver mi link» |
 
 ## Cómo editar
 

@@ -361,41 +361,13 @@ body{
 .of-btns button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 /* Mock del link de pago */
 
-.cotiza{width:100%;max-width:430px;margin:20px 0 4px}
-.cotiza .fila{margin-bottom:8px}
-.cot-n{flex:1;min-width:0;font-size:14px;font-weight:700;color:var(--ink);text-align:left}
-.cot-t{font-size:13px;color:var(--g500);white-space:nowrap}
-.cot-p{font-size:15px;font-weight:800;color:var(--ink);margin-left:16px;white-space:nowrap}
-.cot-nota{font-size:13px;color:var(--oxford);margin:10px 0 0;display:flex;
-  align-items:center;justify-content:center;gap:7px}
-.cot-nota b{color:var(--red);font-weight:800}
-.cot-nota svg{width:15px;height:15px;flex:0 0 auto}
-.cotiza,.cot-nota,.linkBox,.redes{flex:0 0 auto}
+.premio{display:inline-flex;align-items:center;gap:8px;margin:18px 0 0;flex:0 0 auto;
+  background:var(--red-50);color:var(--red);border-radius:999px;padding:10px 18px;
+  font-size:13px;font-weight:700;line-height:1.35;max-width:100%;text-align:left}
+.premio svg{width:16px;height:16px;flex:0 0 auto}
 .finL .dico,.finL .of-cta{flex:0 0 auto}
-.linkBox{width:100%;max-width:430px;margin:20px 0 0;display:flex;align-items:center;
-  gap:10px;background:var(--g50);border:1px solid var(--line);border-radius:10px;
-  padding:0 6px 0 16px;height:50px}
-.linkU{flex:1;min-width:0;font-size:14px;font-weight:600;color:var(--ink);
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}
-.linkCopy{flex:0 0 auto;height:38px;padding:0 14px;border:0;border-radius:8px;
-  background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.08);cursor:pointer;
-  font:700 13px 'Manrope',sans-serif;color:var(--ink);display:inline-flex;
-  align-items:center;gap:7px;transition:background-color .15s ease}
-.linkCopy:hover{background:var(--g100)}
-.linkCopy:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.linkCopy[aria-pressed="true"]{color:var(--green)}
-.redes{display:flex;align-items:center;justify-content:center;gap:12px;margin:18px 0 0}
-.redes p{font-size:13px;color:var(--g500);margin:0 2px 0 0}
-.redes button{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);
-  background:#fff;cursor:pointer;display:grid;place-items:center;padding:0;
-  transition:border-color .15s ease, background-color .15s ease}
-.redes button:hover{background:var(--g50);border-color:var(--g200)}
-.redes button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.redes img{width:22px;height:22px;display:block}
 @media (max-width:768px){
-  .cot-t{display:none}
-  .linkBox{padding-left:12px}
-  .linkU{font-size:13px}
+  .premio{font-size:12.5px;padding:10px 15px;align-items:flex-start}
 }
 .linkSalida{background:none;border:0;color:var(--g500);font:500 13.5px 'Manrope',sans-serif;
   cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:6px;border-radius:6px}
@@ -670,7 +642,10 @@ body{
                botones:[["Activar","b-pri"]],
                hecho:{ titulo:"¡Listo! Activaste tus métodos de pago",
                        linea:"Crea tu primer link de pago. ¿Qué quieres cobrar?",
-                       botones:[["Un producto","b-sec"],["Un monto","b-sec"]] } },
+                       botones:[["Un producto","b-sec"],["Un monto","b-sec"]] },
+               hechoLanding:{ titulo:"Tu link de pago está listo",
+                       linea:"Ya puedes compartirlo con tu cliente.",
+                       botones:[["Ver mi link","b-pri"]] } },
       salida:"Ir al admin"
     }
   };
@@ -700,13 +675,10 @@ body{
      «cero» = entra en frío. «landing» = ya dijo a qué viene desde la landing
      nueva, así que se le pregunta lo mínimo y se le entrega esa tarea. */
   var CASOS = [
-    { id:"envios-cero", prod:"envios", origen:"cero",    nombre:"Envíos · desde 0" },
-    { id:"envios-cot",  prod:"envios", origen:"landing", nombre:"Envíos · a cotizar" },
-    { id:"tienda-cero", prod:"tienda", origen:"cero",    nombre:"Tienda" },
-    { id:"pagos-cero",  prod:"pagos",  origen:"cero",    nombre:"Pagos · desde 0" },
-    { id:"pagos-link",  prod:"pagos",  origen:"landing", nombre:"Pagos · a link de pago" }
+    { id:"envios-cot", prod:"envios", origen:"landing", nombre:"Envíos · a cotizar" },
+    { id:"pagos-link", prod:"pagos",  origen:"landing", nombre:"Pagos · a link de pago" }
   ];
-  var caso = "envios-cero";
+  var caso = "envios-cot";
   function C(){
     for(var i = 0; i < CASOS.length; i++) if(CASOS[i].id === caso) return CASOS[i];
     return CASOS[0];
@@ -720,7 +692,7 @@ body{
 
   function inicial(){
     return { tipo:"empezando", nombre:PRELLENADO.empezando, tocado:false,
-             canales:[], giro:null, volumen:null, tarifa:0, copiado:false, paso:0,
+             canales:[], giro:null, volumen:null, paso:0,
              extra:null, metodo:null, monto:null, factura:false, tipoLink:null, tyc:false, activado:false };
   }
   function P(){ return PROD[prod]; }
@@ -861,9 +833,6 @@ body{
     '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">' +
     '<path d="M1.5 1.5l11 11M12.5 1.5l-11 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' +
     '</svg></button>';
-  var PALOMA_V = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" ' +
-    'stroke="#51AF70" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" ' +
-    'aria-hidden="true"><path d="M5 12.5L10 17.5L19 7"/></svg>';
   var RELOJ = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
     'stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
     '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 1.9"/></svg>';
@@ -882,67 +851,25 @@ body{
     }).join("") + '</div>';
   }
 
-  /* Llega del landing habiendo cotizado: se le devuelve la cotización, no una oferta */
-  var TARIFAS = [["Estafeta","2 a 3 días","$148.00"],
-                 ["99minutos","Entrega hoy","$189.00"],
-                 ["FedEx","1 a 2 días","$215.00"]];
-  var CONCEPTOS = { productos:"Playera bordada", servicios:"Asesoría de imagen",
-                    ambos:"Asesoría de imagen" };
-
+  /* El modal no reimplementa el cotizador: confirma la cuenta, deja puesto el
+     cashback y manda a ver las tarifas donde ya viven. */
   function cotizacion(){
-    var filas = TARIFAS.map(function(t, i){
-      return '<button type="button" class="fila" data-cot="' + i + '" aria-pressed="' +
-        (S.tarifa === i ? "true" : "false") + '">' + marca("radio") +
-        '<span class="cot-n">' + t[0] + '</span>' +
-        '<span class="cot-t">' + t[1] + '</span>' +
-        '<span class="cot-p">' + t[2] + '</span></button>';
-    }).join("");
-    return '<div class="modal modalFin' + (entrada ? " enter" : "") +
-      '" role="dialog" aria-modal="true" aria-labelledby="q-fin">' + EQUIS +
-      '<div class="finL">' + CHECK +
-        '<h3 id="q-fin" tabindex="-1">Tu cotización está lista</h3>' +
-        '<p class="sub">Ciudad de México → Monterrey · 2 kg · 30×20×15 cm</p>' +
-        '<div class="cotiza">' + filas + '</div>' +
-        '<p class="cot-nota">' + REGALO_P +
-          'Tu primera recarga tiene <b>10% de cashback</b></p>' +
-        '<button type="button" class="of-cta" data-fin="1">Continuar con ' +
-          TARIFAS[S.tarifa][0] + '</button>' +
-      '</div></div>';
-  }
-
-  /* Llega del landing habiendo empezado un link de pago: se le entrega el link */
-  function linkPago(){
-    var concepto = CONCEPTOS[S.giro] || "Asesoría de imagen";
     return '<div class="modal modalFin' + (entrada ? " enter" : "") +
       '" role="dialog" aria-modal="true" aria-labelledby="q-fin">' + EQUIS +
       '<div class="confetti" id="confetti" aria-hidden="true"></div>' +
       '<div class="finL">' + CHECK +
-        '<h3 id="q-fin" tabindex="-1">Tu link de pago está listo</h3>' +
-        '<p class="sub">Cobra <b>$1,250.00</b> por ' + concepto + '.</p>' +
-        '<div class="linkBox">' +
-          '<span class="linkU">t1pagos.mx/kr-8f2a</span>' +
-          '<button type="button" class="linkCopy" data-copiar="1" aria-pressed="' +
-            (S.copiado ? "true" : "false") + '">' +
-            (S.copiado ? PALOMA_V : COPIAR) + (S.copiado ? "Copiado" : "Copiar") +
-          '</button>' +
-        '</div>' +
-        '<div class="redes">' +
-          '<p>Compártelo por</p>' +
-          '<button type="button" aria-label="WhatsApp" data-fin="1">' +
-            '<img src="<!--RED_WA-->" alt=""></button>' +
-          '<button type="button" aria-label="Facebook" data-fin="1">' +
-            '<img src="<!--RED_FB-->" alt=""></button>' +
-          '<button type="button" aria-label="Instagram" data-fin="1">' +
-            '<img src="<!--RED_IG-->" alt=""></button>' +
-        '</div>' +
-        '<button type="button" class="of-cta" data-fin="1" ' +
-          'style="margin-top:22px">Ir a mis links</button>' +
+        '<h3 id="q-fin" tabindex="-1">Tu cuenta está lista</h3>' +
+        '<p class="sub">Ya puedes ver las tarifas de tu envío.</p>' +
+        '<p class="premio">' + REGALO_P +
+          '<span>10% de cashback en tu primera recarga · hasta $5,000 MXN</span></p>' +
+        '<button type="button" class="of-cta" data-fin="1">' +
+          'Ver resultados de cotización</button>' +
       '</div></div>';
   }
 
   function cierre(){
     var p = P();
-    if(delLanding()) return prod === "envios" ? cotizacion() : linkPago();
+    if(delLanding() && prod === "envios") return cotizacion();
 
     /* Sin oferta: el cierre se queda en una columna */
     if(!p.cupon){
@@ -964,13 +891,14 @@ body{
             '<div class="of-btns col">' + botones + '</div>' +
           '</div></div>';
       } else {
-        if(a.hecho && S.activado){
-          var bh = a.hecho.botones.map(function(b){
+        var H = (delLanding() && a.hechoLanding) ? a.hechoLanding : a.hecho;
+        if(H && S.activado){
+          var bh = H.botones.map(function(b){
             return '<button type="button" class="' + b[1] + '" data-fin="1">' + b[0] + '</button>';
           }).join("");
           tarjeta = '<div class="oferta neutra">' +
-            '<div class="of-exito"><p><b>' + a.hecho.titulo + '</b><br>' +
-            a.hecho.linea + '</p></div>' +
+            '<div class="of-exito"><p><b>' + H.titulo + '</b><br>' +
+            H.linea + '</p></div>' +
             '<div class="of-btns">' + bh + '</div></div>';
         } else {
           tarjeta = '<div class="oferta neutra">' +
@@ -1295,7 +1223,9 @@ body{
         var principal = b.classList.contains("of-cta") || b.classList.contains("b-pri") ||
                         b.classList.contains("b-ia") || b.classList.contains("b-sec");
         if(b.getAttribute("aria-disabled") === "true") return;
-        if(version === "B" && prod === "pagos" && !S.activado && principal){
+        /* Aquí el paso de activar métodos no depende de la versión: es parte
+           del camino que llega del landing a crear su link. */
+        if(prod === "pagos" && !S.activado && principal){
           S.activado = true; entrada = false; render(); return;
         }
         if(version === "B" && principal && !S.extra && FLUJO[prod]){
@@ -1306,16 +1236,6 @@ body{
     });
 
     /* Controles de las pantallas de la versión B */
-    root.querySelectorAll("[data-cot]").forEach(function(b){
-      b.addEventListener("click", function(){
-        S.tarifa = +b.getAttribute("data-cot"); entrada = false; render();
-      });
-    });
-    var cop = root.querySelector("[data-copiar]");
-    if(cop) cop.addEventListener("click", function(){
-      S.copiado = true; entrada = false; render();
-    });
-
     root.querySelectorAll("[data-metodo]").forEach(function(b){
       b.addEventListener("click", function(){
         S.metodo = b.getAttribute("data-metodo");
