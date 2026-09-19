@@ -656,10 +656,9 @@ body{
                hecho:{ titulo:"¡Listo! Activaste tus métodos de pago",
                        linea:"Crea tu primer link de pago. ¿Qué quieres cobrar?",
                        botones:[["Un producto","b-sec"],["Un monto","b-sec"]] },
-               lineaLanding:"Tu link de pago está casi listo. " +
-                            "Solo falta activar tus métodos de pago.",
-               hechoLanding:{ titulo:"Tu link de pago está listo",
-                       linea:"Ya puedes compartirlo con tu cliente.",
+               lineaLanding:"Activa tus métodos de pago para cobrarlo.",
+               hechoLanding:{ titulo:"¡Listo! Ya puedes cobrar",
+                       linea:"Comparte tu link con tus clientes.",
                        botones:[["Ver mi link","b-pri"]] } },
       salida:"Ir al admin"
     }
@@ -875,7 +874,7 @@ body{
       '<div class="confetti" id="confetti" aria-hidden="true"></div>' +
       '<div class="finL">' + CHECK +
         '<h3 id="q-fin" tabindex="-1">Tu cotización está lista</h3>' +
-        '<p class="sub">Tu cuenta quedó configurada.</p>' +
+        '<p class="sub">Tu cuenta ya está lista para enviar.</p>' +
         '<div class="oferta cupon">' +
           '<div class="cup-top"><span class="cup-ico">' + REGALO_P + '</span>' +
             '<p class="cup-lead">Recibe hasta</p></div>' +
@@ -896,6 +895,7 @@ body{
     /* Sin oferta: el cierre se queda en una columna */
     if(!p.cupon){
       var a = p.accion;
+      var esPagosLanding = delLanding() && prod === "pagos";
       var botones = a.botones.map(function(b){
         return '<button type="button" class="' + b[1] + '" data-fin="1"' +
           (a.tyc && !S.tyc ? ' aria-disabled="true"' : '') + '>' + b[0] +
@@ -913,7 +913,6 @@ body{
             '<div class="of-btns col">' + botones + '</div>' +
           '</div></div>';
       } else {
-        var esPagosLanding = delLanding() && prod === "pagos";
         var H = (esPagosLanding && a.hechoLanding) ? a.hechoLanding : a.hecho;
         if(H && S.activado){
           var bh = H.botones.map(function(b){
@@ -942,8 +941,11 @@ body{
         EQUIS +
         '<div class="confetti" id="confetti" aria-hidden="true"></div>' +
         '<div class="finL">' + CHECK +
-          '<h3 id="q-fin" tabindex="-1">¡Todo listo!</h3>' +
-          '<p class="sub">Tu cuenta quedó configurada.</p>' +
+          '<h3 id="q-fin" tabindex="-1">' +
+            (esPagosLanding ? "Tu link de pago está listo" : "¡Todo listo!") + '</h3>' +
+          '<p class="sub">' + (esPagosLanding
+            ? "Tu cuenta ya está lista para cobrar."
+            : "Tu cuenta quedó configurada.") + '</p>' +
           tarjeta +
         '</div></div>';
     }
