@@ -254,7 +254,9 @@ body{
 .done{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;padding:36px 44px;position:relative;z-index:1}
 .dico{width:52px;height:52px;border-radius:50%;background:var(--green);display:grid;
-  place-items:center;margin-bottom:12px;animation:pop .26s cubic-bezier(.34,1.56,.64,1) both}
+  place-items:center;margin-bottom:12px}
+/* La palomita salta al llegar al cierre, no en cada repintado */
+.celebra .dico{animation:pop .26s cubic-bezier(.34,1.56,.64,1) both}
 @keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
 .done h3,.finL h3{font-size:26px;font-weight:700;letter-spacing:-.03em;margin:0 0 3px;color:var(--ink)}
 .done .sub,.finL .sub{font-size:14px;color:var(--g500);margin:0}
@@ -736,7 +738,7 @@ body{
   var mqCel = window.matchMedia("(max-width: 768px)");
   var cel = mqCel.matches;
 
-  var S, entrada = true, anim = null;
+  var S, entrada = true, anim = null, enCierre = false;
 
   function inicial(){
     return { tipo:"empezando", nombre:PRELLENADO.empezando, tocado:false,
@@ -1261,8 +1263,13 @@ body{
     v.className = "veil" + (entrada ? " enter" : "");
     v.innerHTML = modal();
     entrada = false;
+    /* La celebración es de llegar al cierre. Dentro de él se repinta en cada
+       clic —copiar, activar, elegir— y no hay nada nuevo que festejar. */
+    var fin = v.querySelector(".finL");
+    var llegando = !!fin && !enCierre;
+    enCierre = !!fin;
     conectar(v);
-    confeti(v);
+    if(llegando){ fin.classList.add("celebra"); confeti(v); }
   }
 
   function confeti(root){
