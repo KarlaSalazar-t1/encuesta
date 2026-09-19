@@ -53,16 +53,18 @@ sup{color:var(--red);font-weight:800}
 
 <div class="wrap">
   <h1>Matriz de casos</h1>
-  <p class="intro">Todos los recorridos de la encuesta de alta. Cada fila se
-  recorrió en el prototipo publicado, pantalla por pantalla, así que describe lo
-  que hace hoy y no lo que debería hacer.</p>
+  <p class="intro">Todos los recorridos de la encuesta de alta. Las cinco
+  columnas del centro son las cinco preguntas que existen: la marca dice que en
+  ese caso sí se hace, y las marcas de cada fila suman su total. Cada fila se
+  recorrió en el prototipo publicado, pantalla por pantalla.</p>
 
   <div class="scroll">
     <table>
       <thead>
         <tr>
           <th>Caso</th>
-          <th>Respuesta a «¿Tienes un negocio?»</th>
+          <th>Perfil elegido</th>
+          <th class="c">¿Tienes un<br>negocio?</th>
           <th class="c">Nombre</th>
           <th class="c">Canales</th>
           <th class="c">Giro</th>
@@ -84,45 +86,45 @@ sup{color:var(--red);font-weight:800}
 <script>
 var SI = '<span class="marca">✓</span>', NO = '<span class="no">—</span>';
 
-/* caso · respuesta · nombre · canales · giro · volumen · total · pantalla final · CTA
+/* caso · perfil · negocio · nombre · canales · giro · volumen · total · pantalla final · CTA
    Tomado recorriendo los prototipos publicados, no leyendo el código. */
 var R = [
-  ["Envíos", "No, estoy empezando", 1,0,1,0, 3,
+  ["Envíos", "No, estoy empezando", 1,1,0,1,0, 3,
    "Modal rojo de cashback", "Recargar ahora"],
-  ["Envíos", "Sí, ya estoy operando", 1,1,1,1, 5,
+  ["Envíos", "Sí, ya estoy operando", 1,1,1,1,1, 5,
    "Modal rojo de cashback", "Recargar ahora"],
-  ["Envíos", "Es para uso personal", 0,0,0,0, 1,
+  ["Envíos", "Es para uso personal", 1,0,0,0,0, 1,
    "Modal rojo de cashback", "Recargar ahora"],
 
-  ["Tienda", "No, estoy empezando", 1,0,1,0, 3,
+  ["Tienda", "No, estoy empezando", 1,1,0,1,0, 3,
    "Cierre con el mockup de productos", "Crear tienda"],
-  ["Tienda", "Sí, ya estoy operando", 1,1,1,0, 4,
+  ["Tienda", "Sí, ya estoy operando", 1,1,1,1,0, 4,
    "Cierre con el mockup de productos", "Crear tienda"],
-  ["Tienda", "Es para uso personal", 0,0,0,0, 1,
+  ["Tienda", "Es para uso personal", 1,0,0,0,0, 1,
    "Cierre con el mockup de productos", "Crear tienda"],
 
-  ["Pagos", "No, estoy empezando", 1,0,1,0, 3,
+  ["Pagos", "No, estoy empezando", 1,1,0,1,0, 3,
    "Métodos de pago y términos", "Activar"],
-  ["Pagos", "Sí, ya estoy operando", 1,1,1,0, 4,
+  ["Pagos", "Sí, ya estoy operando", 1,1,1,1,0, 4,
    "Métodos de pago y términos", "Activar"],
-  ["Pagos", "Es para uso personal", 0,0,0,0, 1,
+  ["Pagos", "Es para uso personal", 1,0,0,0,0, 1,
    "Métodos de pago y términos", "Activar"],
 
-  ["Envíos desde cotización", "No, estoy empezando", 0,0,1,0, 2,
+  ["Envíos desde cotización", "No, estoy empezando", 1,0,0,1,0, 2,
    "«Tu cotización está lista» con el cupón de cashback", "Ver resultados de cotización"],
-  ["Envíos desde cotización", "Sí, ya estoy operando", 0,0,1,0, 2,
+  ["Envíos desde cotización", "Sí, ya estoy operando", 1,0,0,1,0, 2,
    "«Tu cotización está lista» con el cupón de cashback", "Ver resultados de cotización"],
-  ["Envíos desde cotización", "Es para uso personal", 0,0,0,0, 1,
+  ["Envíos desde cotización", "Es para uso personal", 1,0,0,0,0, 1,
    "«Tu cotización está lista» con el cupón de cashback", "Ver resultados de cotización"],
 
-  ["Pagos desde link de pago", "No, estoy empezando", 0,0,1,0, 2,
+  ["Pagos desde link de pago", "No, estoy empezando", 1,0,0,1,0, 2,
    "Activar métodos y luego el resumen: monto, URL y compartir", "Activar → Compartir por WhatsApp"],
-  ["Pagos desde link de pago", "Sí, ya estoy operando", 0,0,1,0, 2,
+  ["Pagos desde link de pago", "Sí, ya estoy operando", 1,0,0,1,0, 2,
    "Activar métodos y luego el resumen: monto, URL y compartir", "Activar → Compartir por WhatsApp"],
-  ["Pagos desde link de pago", "Es para uso personal", 0,0,0,0, 1,
+  ["Pagos desde link de pago", "Es para uso personal", 1,0,0,0,0, 1,
    "Activar métodos y luego el resumen: monto, URL y compartir", "Activar → Compartir por WhatsApp"],
 
-  ["Tienda desde crear tienda<sup>*</sup>", "No se pregunta", 0,0,0,0, 0,
+  ["Tienda desde crear tienda<sup>*</sup>", "No se pregunta", 0,0,0,0,0, 0,
    "Ninguna: entra directo al flujo de crear tienda", "—"]
 ];
 
@@ -133,11 +135,11 @@ document.getElementById("tabla").innerHTML = R.map(function(f){
   return '<tr' + (abre ? ' class="abre"' : '') + '>' +
     '<td class="caso">' + f[0] + '</td>' +
     '<td>' + f[1] + '</td>' +
-    [f[2], f[3], f[4], f[5]].map(function(v){
+    [f[2], f[3], f[4], f[5], f[6]].map(function(v){
       return '<td class="c">' + (v ? SI : NO) + '</td>';
     }).join("") +
-    '<td class="num">' + f[6] + '</td>' +
-    '<td class="libre">' + f[7] + '</td>' +
-    '<td class="cta">' + f[8] + '</td></tr>';
+    '<td class="num">' + f[7] + '</td>' +
+    '<td class="libre">' + f[8] + '</td>' +
+    '<td class="cta">' + f[9] + '</td></tr>';
 }).join("");
 </script>
