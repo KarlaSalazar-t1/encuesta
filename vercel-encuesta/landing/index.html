@@ -690,7 +690,9 @@ body{
                        linea:"Crea tu primer link de pago. ¿Qué quieres cobrar?",
                        botones:[["Un producto","b-sec"],["Un monto","b-sec"]] },
                lineaLanding:"Solo activa tus métodos de pago.",
-               },
+               hechoLanding:{ titulo:"¡Listo! Ya puedes cobrar",
+                       linea:"Comparte tu link con tus clientes.",
+                       botones:[["Ver mi link","b-pri"]] } },
       salida:"Ir al admin"
     }
   };
@@ -721,7 +723,8 @@ body{
      nueva, así que se le pregunta lo mínimo y se le entrega esa tarea. */
   var CASOS = [
     { id:"envios-cot", prod:"envios", origen:"landing", nombre:"Envíos · a cotizar" },
-    { id:"pagos-link", prod:"pagos", origen:"landing", nombre:"Pagos · link de pago" }
+    { id:"pagos-acuse",   prod:"pagos", origen:"landing", nombre:"Pagos · link · acuse" },
+    { id:"pagos-resumen", prod:"pagos", origen:"landing", nombre:"Pagos · link · resumen" }
   ];
   var caso = "envios-cot";
   function C(){
@@ -729,6 +732,8 @@ body{
     return CASOS[0];
   }
   function delLanding(){ return C().origen === "landing"; }
+  /* Los dos cierres del link: el acuse corto o el resumen con URL y compartir */
+  function esResumen(){ return caso === "pagos-resumen"; }
   var prod = "envios";
   var mqCel = window.matchMedia("(max-width: 768px)");
   var cel = mqCel.matches;
@@ -949,11 +954,12 @@ body{
             '<div class="of-btns col">' + botones + '</div>' +
           '</div></div>';
       } else {
-        if(S.activado && (esPagosLanding || a.hecho)){
-          var bh = (a.hecho ? a.hecho.botones : []).map(function(b){
+        var H = esPagosLanding ? a.hechoLanding : a.hecho;
+        if(S.activado && H){
+          var bh = H.botones.map(function(b){
             return '<button type="button" class="' + b[1] + '" data-fin="1">' + b[0] + '</button>';
           }).join("");
-          tarjeta = esPagosLanding
+          tarjeta = esResumen()
             ? '<div class="oferta neutra resumen">' +
                 '<div class="res-fila">' +
                   '<span class="res-c">' + concepto() + '</span>' +
@@ -968,8 +974,8 @@ body{
               '<button type="button" class="linkSalida" data-fin="1">' +
                 'Ver detalles del link</button>'
             : '<div class="oferta neutra">' +
-              '<div class="of-exito"><p><b>' + a.hecho.titulo + '</b><br>' +
-              a.hecho.linea + '</p></div>' +
+              '<div class="of-exito"><p><b>' + H.titulo + '</b><br>' +
+              H.linea + '</p></div>' +
               '<div class="of-btns">' + bh + '</div></div>';
         } else {
           tarjeta = '<div class="oferta neutra">' +

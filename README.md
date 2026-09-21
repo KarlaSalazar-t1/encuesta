@@ -25,10 +25,14 @@ que el usuario venía en vez de una oferta genérica.
 | Caso | Preguntas | Termina en |
 |---|---|---|
 | Envíos · a cotizar | las mismas que envíos | cuenta lista, el cupón de cashback y «Ver resultados de cotización» |
-| Pagos · link de pago | las mismas que pagos | activar métodos y el resumen: monto, URL y compartir por WhatsApp |
+| Pagos · link · acuse | las mismas que pagos | activar métodos y «¡Listo! Ya puedes cobrar» con «Ver mi link» |
+| Pagos · link · resumen | las mismas que pagos | activar métodos y el resumen: monto, URL y compartir por WhatsApp |
 
 Tienda desde la landing no pasa por encuesta: entra directo al flujo de crear
 tienda. Aparece en la matriz, no en el prototipo.
+
+La matriz recoge un solo cierre de pagos, el del resumen: los dos cierres son
+una comparación de diseño, no dos casos distintos de encuesta.
 
 ## Cómo editar
 
