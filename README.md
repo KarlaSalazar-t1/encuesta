@@ -8,7 +8,7 @@ administrador de T1envíos, T1tienda y T1pagos.
 | | |
 |---|---|
 | Versión A — la encuesta termina en el cierre | https://vercel-encuesta-roan.vercel.app |
-| Versión B — el cierre continúa en el primer paso real | https://vercel-encuesta-roan.vercel.app/v-b |
+| Versión B — el cierre de pagos continúa en el mismo modal | https://vercel-encuesta-roan.vercel.app/v-b |
 | Encuesta para la landing nueva — cinco casos de entrada | https://vercel-encuesta-roan.vercel.app/landing |
 | Cierres de envíos — cuatro propuestas comparadas | https://vercel-encuesta-roan.vercel.app/opciones |
 | Matriz de casos — qué se pregunta y dónde termina cada uno | https://vercel-encuesta-roan.vercel.app/matriz |

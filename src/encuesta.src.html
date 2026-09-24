@@ -918,139 +918,7 @@ body{
     'stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/>' +
     '<path d="M12 11v5M12 7.5h.01" stroke-linecap="round"/></svg>';
 
-  function xcabeza(titulo, atras){
-    return '<div class="xhead">' +
-      (atras ? '<button type="button" class="xback" data-x="atras" aria-label="Regresar">' +
-        chev("l") + '</button>' : '') +
-      '<h3 tabindex="-1">' + titulo + '</h3>' + EQUIS + '</div>';
-  }
-  function xpie(izq, der, bloqueado){
-    return '<div class="foot">' +
-      (izq ? '<button type="button" class="btn btnS" data-x="atras">' + izq + '</button>'
-           : '<span></span>') +
-      '<button type="button" class="btn btnP" data-x="sig"' +
-        (bloqueado ? ' aria-disabled="true"' : '') + '>' + der + '</button></div>';
-  }
-
-  function extraHTML(){
-    var e = S.extra, h = "", cab = "";
-
-    /* ENVÍOS · método de pago */
-    if(e === "metodo"){
-      cab = xcabeza("Recarga saldo", false);
-      h += '<p class="xayuda">Selecciona un método de pago para realizar tu recarga de saldo.</p>';
-      h += '<button type="button" class="fila" data-metodo="tarjeta">' +
-        '<span class="fila-c"><span class="fila-logos">' + PAY_TARJETAS + '</span>' +
-        '<span class="fila-t">Tarjeta de crédito y débito</span></span>' +
-        '<span class="chev">' + chev("r") + '</span></button>';
-      h += '<button type="button" class="fila" data-metodo="spei">' +
-        '<span class="fila-c"><span class="fila-logos">' + PAY_SPEI + '</span>' +
-        '<span class="fila-t">Pago con transferencia</span></span>' +
-        '<span class="chev">' + chev("r") + '</span></button>';
-      return cab + '<div class="pane"><div class="anim">' + h + '</div></div>';
-    }
-
-    /* ENVÍOS · monto */
-    if(e === "monto"){
-      cab = xcabeza("Recarga saldo", true);
-      var m = S.monto || 0, cb = Math.round(m * 0.10);
-      h += '<p class="xayuda">Ingresa el monto que deseas recargar.</p>';
-      h += '<div class="montos">' + MONTOS.map(function(v){
-        return '<button type="button" class="monto" data-monto="' + v + '" aria-pressed="' +
-          (S.monto === v ? "true" : "false") + '"><b>$' + v.toLocaleString("es-MX") + '</b>' +
-          '<span>Cashback 10%</span></button>';
-      }).join("") + '<button type="button" class="monto" data-monto="otro" aria-pressed="false">' +
-        '<b>Otro</b></button></div>';
-      h += '<div class="resumen">' +
-        '<div class="res-f"><span>Saldo actual</span><span>' + mx(0) + '</span></div>' +
-        '<div class="res-f cb"><span>Cashback</span><span>' + mx(cb) + '</span></div>' +
-        '<div class="res-f"><span>Recarga</span><span>+' + mx(m) + '</span></div>' +
-        '<div class="res-f tot"><span>Saldo final</span><span>' + mx(m + cb) + '</span></div>' +
-        '</div>';
-      h += '<button type="button" class="check-l" data-x="factura" role="checkbox" aria-checked="' +
-        (S.factura ? "true" : "false") + '">' + marca("check") + 'Solicitar facturación</button>';
-      return cab + '<div class="pane"><div class="anim">' + h + '</div>' +
-        xpie("Regresar", "Continuar", !S.monto) + '</div>';
-    }
-
-    /* ENVÍOS · tarjeta */
-    if(e === "tarjeta"){
-      cab = xcabeza("Agregar tarjeta", true);
-      h += '<p class="xayuda">Captura la información de tu tarjeta de crédito o débito para ' +
-        'realizar tu recarga.</p>';
-      h += '<div class="campos">' +
-        '<p class="campo-l">Datos de tarjeta</p>' +
-        '<div class="ancho campo-logos"><input class="campo" placeholder="0000 0000 0000 0000" ' +
-          'inputmode="numeric" aria-label="Número de tarjeta">' +
-          '<span class="logos">' + PAY_TARJETAS + '</span></div>' +
-        '<input class="campo" placeholder="MM/AA" aria-label="Vencimiento">' +
-        '<input class="campo" placeholder="CVV" aria-label="CVV">' +
-        '<p class="campo-l">Nombre completo</p>' +
-        '<input class="campo ancho" placeholder="Nombre completo" aria-label="Nombre completo">' +
-        '<p class="campo-l">Dirección de la tarjeta</p>' +
-        '<input class="campo ancho" placeholder="Calle" aria-label="Calle">' +
-        '<input class="campo" placeholder="Número exterior" aria-label="Número exterior">' +
-        '<input class="campo" placeholder="Número interior" aria-label="Número interior">' +
-        '<input class="campo" placeholder="Código postal" aria-label="Código postal">' +
-        '<input class="campo" placeholder="Estado" aria-label="Estado">' +
-        '<input class="campo ancho" placeholder="Ciudad" aria-label="Ciudad">' +
-        '</div>';
-      return cab + '<div class="pane"><div class="anim">' + h + '</div>' +
-        xpie("Regresar", "Continuar", true) + '</div>';
-    }
-
-    /* ENVÍOS · SPEI */
-    if(e === "spei"){
-      cab = xcabeza("Recarga saldo", true);
-      h += '<div class="aviso">' + INFO + '<span><b>Importante:</b> puedes recargar hasta ' +
-        '$24,000.00 MXN al mes. Solicita facturación para aumentar tu límite.</span></div>';
-      h += '<div class="spei-h"><h4>¿Cómo recargar tu saldo con SPEI?</h4>' +
-        '<span class="spei-logo">' + PAY_SPEI + '</span></div>';
-      h += '<p class="xayuda" style="margin-bottom:14px">Utiliza esta cuenta CLABE para realizar ' +
-        'depósitos a tu saldo T1.</p>';
-      h += '<div class="dato"><span class="k">Banco</span>' +
-        '<span class="v">STP' + COPIAR + '</span></div>';
-      h += '<div class="dato"><span class="k">Beneficiario</span>' +
-        '<span class="v">Mi negocio' + COPIAR + '</span></div>';
-      h += '<div class="dato"><span class="k">Cuenta CLABE</span>' +
-        '<span class="v">646180285900589005' + COPIAR + '</span></div>';
-      h += '<p class="campo-l" style="margin-top:20px">Límites de recarga</p>';
-      h += '<div class="res-f"><span>Disponible para recargar este mes</span><span>' +
-        mx(24000) + '</span></div>';
-      h += '<div class="res-f"><span>Límite total mensual</span><span>' + mx(24000) +
-        '<em class="usado">(utilizado ' + mx(0) + ')</em></span></div>';
-      h += '<button type="button" class="check-l" data-x="factura" role="checkbox" aria-checked="' +
-        (S.factura ? "true" : "false") + '">' + marca("check") + 'Solicitar facturación</button>';
-      return cab + '<div class="pane"><div class="anim">' + h + '</div>' +
-        xpie("Regresar", "Continuar", true) + '</div>';
-    }
-
-    /* TIENDA · prompt prellenado con lo que contestó */
-    if(e === "prompt"){
-      cab = xcabeza("Crea tu tienda con IA", false);
-      var base = S.giro === "servicios" ? "Ofrezco servicios de "
-               : S.giro === "ambos" ? "Vendo productos y servicios de "
-               : "Vendo productos de ";
-      h += '<p class="xayuda">Cuéntanos de tu negocio y armamos tu tienda en segundos. ' +
-        'Puedes cambiar todo después.</p>';
-      h += '<textarea class="prompt" id="prompt" aria-label="Describe tu negocio">' +
-        esc(base) + '</textarea>';
-      h += '<p class="prompt-pie">Empezamos con lo que contestaste. Entre más detalles des, ' +
-        'más se va a parecer a lo que tienes en mente.</p>';
-      return cab + '<div class="pane"><div class="anim">' + h + '</div>' +
-        xpie("", "Crear tienda", false) + '</div>';
-    }
-
-    return "";
-  }
-
-  var FLUJO = { envios:"metodo", tienda:"prompt" };
-
   function modal(){
-    if(S.extra){
-      return '<div class="modal modalA' + (entrada ? " enter" : "") +
-        '" role="dialog" aria-modal="true">' + extraHTML() + '</div>';
-    }
     if(pant() === "fin") return cierre();
     var cls = "modal " + (dosCol() ? "modalB" : "modalA") + (entrada ? " enter" : "");
 
@@ -1187,46 +1055,12 @@ body{
         if(version === "B" && prod === "pagos" && !S.activado && principal){
           S.activado = true; entrada = false; render(); return;
         }
-        if(version === "B" && principal && !S.extra && FLUJO[prod]){
-          S.extra = FLUJO[prod]; entrada = false; render(); xfoco(); return;
-        }
         S = inicial(); entrada = true; render();
       });
     });
 
-    /* Controles de las pantallas de la versión B */
-    root.querySelectorAll("[data-metodo]").forEach(function(b){
-      b.addEventListener("click", function(){
-        S.metodo = b.getAttribute("data-metodo");
-        S.extra = S.metodo === "spei" ? "spei" : "monto";
-        render(); xfoco();
-      });
-    });
-    root.querySelectorAll("[data-monto]").forEach(function(b){
-      b.addEventListener("click", function(){
-        var v = b.getAttribute("data-monto");
-        S.monto = v === "otro" ? null : parseInt(v, 10);
-        render();
-      });
-    });
-    root.querySelectorAll("[data-link]").forEach(function(b){
-      b.addEventListener("click", function(){ S.tipoLink = b.getAttribute("data-link"); render(); });
-    });
-    root.querySelectorAll("[data-mp]").forEach(function(b){
-      b.addEventListener("click", function(){
-        b.setAttribute("aria-checked", b.getAttribute("aria-checked") === "true" ? "false" : "true");
-      });
-    });
-    var fx = root.querySelector('[data-x="factura"]');
-    if(fx) fx.addEventListener("click", function(){ S.factura = !S.factura; render(); });
     var tx = root.querySelector('[data-x="tyc"]');
     if(tx) tx.addEventListener("click", function(){ S.tyc = !S.tyc; render(); });
-
-    root.querySelectorAll('[data-x="atras"]').forEach(function(b){
-      b.addEventListener("click", xatras);
-    });
-    var sig = root.querySelector('[data-x="sig"]');
-    if(sig) sig.addEventListener("click", xsiguiente);
 
     root.addEventListener("keydown", function(e){
       if(e.key !== "Tab") return;
@@ -1280,29 +1114,6 @@ body{
       cta(raiz);
       return;
     }
-  }
-
-  function xfoco(){
-    var h = document.querySelector("#veil .xhead h3");
-    if(h) h.focus({ preventScroll:true });
-  }
-  function xatras(){
-    var e = S.extra;
-    if(e === "monto") S.extra = "metodo";
-    else if(e === "spei") S.extra = "metodo";
-    else if(e === "tarjeta") S.extra = "monto";
-    else { S = inicial(); entrada = true; }
-    render(); xfoco();
-  }
-  function xsiguiente(){
-    var e = S.extra;
-    if(e === "tarjeta" || e === "spei") return;   /* fin del demo */
-    if(e === "monto"){
-      if(!S.monto) return;
-      S.extra = S.metodo === "spei" ? "spei" : "tarjeta";
-    }
-    else { S = inicial(); entrada = true; }   /* fin del recorrido: vuelve a empezar */
-    render(); xfoco();
   }
 
   function avanzar(){
